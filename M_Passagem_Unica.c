@@ -55,16 +55,16 @@ void resolvePassagemUnica(char *nomeEntrada, char *nomeSaida)
 	 	tabelaSims = retornaTabelaSimbolos(linha, tabelaSims,  posicao);
 	 	posicao+= contaSomaPos( linha); 
 
-	 	linhas = AnaliseSintatica( linha, tabelaSims,linhas);
+	 	//linhas = AnaliseSintatica( linha, tabelaSims,linhas);
 	 
 	// 	//chamando a funcao de sintese para gerar o codigo objeto
-		Sintese (linha, nomeSaida, tabelaSims);
+		//Sintese (linha, nomeSaida, tabelaSims);
 	 }
 	 
 
-	 analiseSemantica(linhas, tabelaSims);
+	// analiseSemantica(linhas, tabelaSims);
 	// //resolvendo as indefinicoes de simbolos do codigo objeto
-	 resolveIndefinicoes(nomeSaida,tabelaSims);
+	 //resolveIndefinicoes(nomeSaida,tabelaSims);
 	fclose(ptr_file);
 }
 

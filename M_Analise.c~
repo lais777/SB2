@@ -1113,8 +1113,8 @@ void atualizaTS(infoLinha *linha, TS * lista,char * nome, int pos, int Numlinha)
    if(verificaSeOpAritmeticaLabel(linha))
     op = 1;
 
-   //if(!verificaErroToken(nomeLabel,pos, op))
-     //   EscreveArgErro(Numlinha, 1);
+   if(!verificaErroToken(nomeLabel,pos, op))
+        EscreveArgErro(Numlinha, 1);
 
 //printf("\nATUALIZA %s\n", nomeLabel ); 
    listaAUX = buscaTS(lista, nomeLabel);
@@ -1251,8 +1251,8 @@ TS* insereTS(infoLinha *linha, TS* listaTS,  char *nome, int pos, int Numlinha)
 if(verificaSeOpAritmeticaLabel(linha))
     op = 1;
 
-    //if(!verificaErroToken(nomeLabel,pos,op))
-      //  EscreveArgErro(Numlinha,1);
+    if(!verificaErroToken(nomeLabel,pos,op))
+        EscreveArgErro(Numlinha,1);
 
 
 if(verificaSeMaisOuMenos(nome))
