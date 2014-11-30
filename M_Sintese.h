@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "M_Passagem_Unica.h"
+#include "M_Dicionario.h"
 
 extern struct infoLinha *linha;
 extern struct TS *TabelaSimbolos;
@@ -21,6 +22,14 @@ struct Assembly
 };
 
 typedef struct Assembly assembly;
+
+struct traducao
+{
+    struct linhaInstrucao *traducao;
+    struct linhaInstrucao *opcode;
+};
+
+typedef struct traducao Traducao;
 
 
 

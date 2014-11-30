@@ -86,9 +86,11 @@ void Sintese (infoLinha *linha, char *nomeArquivoSaida, TS *TabelaSimbolos)
 	FILE *saida;
 	char *EhValido, *EhData;
 	int valor;
+	Traducao *traducao;
 
-	listaAssembly = carregaMenmonicos(listaAssembly);
+	// listaAssembly = carregaMenmonicos(listaAssembly);
 
+	traducao = (traducao *)malloc(1*sizeof(traducao));
 
 	saida = fopen(nomeArquivoSaida, "a");
 	
@@ -96,83 +98,145 @@ void Sintese (infoLinha *linha, char *nomeArquivoSaida, TS *TabelaSimbolos)
 	for ( i = 0; i < linha->numTokens; ++i)
 	{	
 		//verifica se o simbolo é uma instrucao de assembly
-		resultadoBuscaAssembly = buscaAssembly(listaAssembly, linha->Tokens[i]);
+		// resultadoBuscaAssembly = buscaAssembly(listaAssembly, linha->Tokens[i]);
 
 		//se o simbolo for uma instrucao ele grava
-		if (resultadoBuscaAssembly != NULL)
+		// if (resultadoBuscaAssembly != NULL)
+		if (!strcmp(linha->Tokens[i], "ADD"))
 		{
-			if (resultadoBuscaAssembly->codigo > 9)
-			{
-				fprintf(saida, " %d", resultadoBuscaAssembly->codigo);
-			}
-			else
-			{
-				fprintf(saida, " 0%d", resultadoBuscaAssembly->codigo);	
-			}
+			/* code */
 		}
-		else{
+		else if (!strcmp(linha->Tokens[i], "SUB"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "MULT"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "DIV"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "JMP"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "JMPN"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "JMPP"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "JMPZ"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "COPY"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "LOAD"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "STORE"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "INPUT"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "OUTPUT"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "C_INPUT"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "C_OUTPUT"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "S_INPUT"))
+		{
+			/* code */
+		}
+		else if (!strcmp(linha->Tokens[i], "S_OUTPUT"))
+		{
+			/* code */
+		}else if (!strcmp(linha->Tokens[i], "STOP"))
+		{
+			/* code */
+		}
+		// }
+		// else{
 
-			EhValido = strstr(linha->Tokens[i], ":");
+		// 	EhValido = strstr(linha->Tokens[i], ":");
 
-			//verifica se é uma label, se for ele pula
-			if (EhValido == NULL)
-			{
-				//se nao for instrucao ele procura na tabela de simbolo
-				resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha->Tokens[i]);
+		// 	//verifica se é uma label, se for ele pula
+		// 	if (EhValido == NULL)
+		// 	{
+		// 		//se nao for instrucao ele procura na tabela de simbolo
+		// 		resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha->Tokens[i]);
 
-				//se for um simbolo ele grava
-				if (resultadoBuscaSimbolo != NULL)
-				{
-					valor = resultadoBuscaSimbolo->valor + resultadoBuscaSimbolo->offset +1;
+		// 		//se for um simbolo ele grava
+		// 		if (resultadoBuscaSimbolo != NULL)
+		// 		{
+		// 			valor = resultadoBuscaSimbolo->valor + resultadoBuscaSimbolo->offset +1;
 
-					if (valor < 0 || valor > 9)
-					{
-						fprintf(saida, " %d", valor);
-					}
-					else
-					{
-						fprintf(saida, " 0%d", valor);	
-					}
-				}
-			}
+		// 			if (valor < 0 || valor > 9)
+		// 			{
+		// 				fprintf(saida, " %d", valor);
+		// 			}
+		// 			else
+		// 			{
+		// 				fprintf(saida, " 0%d", valor);	
+		// 			}
+		// 		}
+		// 	}
 
-			EhData = strstr(linha->Tokens[i], "CONST");
+			// EhData = strstr(linha->Tokens[i], "CONST");
 
-			//verifica se é uma definicao
-			if(EhData != NULL)
-			{
-				valor = atoi(linha->Tokens[i+1]);
+			// //verifica se é uma definicao
+			// if(EhData != NULL)
+			// {
+			// 	valor = atoi(linha->Tokens[i+1]);
 
-				if (valor < 0 || valor > 9)
-				{
-					fprintf(saida, " %d", valor);
-				}
-				else
-				{
-					fprintf(saida, " 0%d", valor);	
-				}
-			}
+			// 	if (valor < 0 || valor > 9)
+			// 	{
+			// 		fprintf(saida, " %d", valor);
+			// 	}
+			// 	else
+			// 	{
+			// 		fprintf(saida, " 0%d", valor);	
+			// 	}
+			// }
 
-			EhData = strstr(linha->Tokens[i], "SPACE");
+			// EhData = strstr(linha->Tokens[i], "SPACE");
 
 			//verifica se é para guardar esqpaco
-			if(EhData != NULL)
-			{
-				if (i+1 == linha->numTokens)
-				{
-					fprintf(saida, " XX");
-				}
-				else
-				{
-					valor = atoi(linha->Tokens[i+1]);
+			// if(EhData != NULL)
+			// {
+			// 	if (i+1 == linha->numTokens)
+			// 	{
+			// 		fprintf(saida, " XX");
+			// 	}
+			// 	else
+			// 	{
+			// 		valor = atoi(linha->Tokens[i+1]);
 
-					int j;
-					for ( j = 0; j < valor; ++j)
-					{
-						fprintf(saida, " XX");
-					}
-				}
-			}
+			// 		int j;
+			// 		for ( j = 0; j < valor; ++j)
+			// 		{
+			// 			fprintf(saida, " XX");
+			// 		}
+			// 	}
+			// }
 		}
 	}
 
@@ -180,60 +244,91 @@ void Sintese (infoLinha *linha, char *nomeArquivoSaida, TS *TabelaSimbolos)
 	
 }
 
-//funcao que muda os zeros absolutos do arquivo para os valores definidos
-void resolveIndefinicoes(char *nomeArquivoSaida, TS *TabelaSimbolos)
+
+void declaravariaveis(char *nomeArquivoSaida, TS *TabelaSimbolos)
 {
-	TS* simbolo;
-	pilhaPos *pilha;
+	TS* p;
+	FILE *saida;
 
- 	for (simbolo = TabelaSimbolos; simbolo!= NULL; simbolo = simbolo->prox)
+	saida = fopen(nomeArquivoSaida, "w");
+
+ 	for (p = lista; p!= NULL; p = p->prox)
  	{
- 		for (pilha = simbolo->pilhaDePosicoes; pilha != NULL; pilha = pilha->pilhaPosProx)
+ 		if (!strcmp(p->tipoDeDefinicao, "CONST"))
  		{
- 			resolvePendencia(nomeArquivoSaida, pilha->pos, simbolo->valor);
-
+ 			fprintf(saida, "\%define %s %d\n", p->nome, p->valorDeDefinicao);
  		}		
  	}
 
-}
+ 	fprintf(saida, "section .bss\n");
 
+ 	for (p = lista; p!= NULL; p = p->prox)
+ 	{
+ 		if (!strcmp(p->tipoDeDefinicao, "SPACE"))
+ 		{
+ 			fprintf(saida, "%s resw %d\n", p->nome, p->valorDeDefinicao);
+ 		}		
+ 	}
 
-//funcao que resolve as pensadencias da tabela de simbolos
-void resolvePendencia(char *nomeArquivoSaida, int posicao, int valor)
-{
-	FILE *saida;
-	int numero, contPosicao = 0, seek;
-	char *subs, *token;
-	fpos_t position;
-	
-	subs = (char*)malloc(sizeof(char*));
-	token = (char*)malloc(sizeof(char*));
-	
-	saida = fopen (nomeArquivoSaida, "r+");
-
-	//colocando o ponteiro do arquivo na posicao da indefinicao
-	seek = (posicao-1) * 3;
-
-	fseek(saida, seek, SEEK_SET);
-
-	//lendo se algum offset foi gravado
-	fscanf(saida, "%s", token);
-	rewind(saida);
-
-	fseek(saida, seek, SEEK_SET);
-
-	//calculando o valor do simbolo mais o offset
-	valor = valor + atoi(token);
-	sprintf(subs, "%d", valor);
-
-	//coloando o valor calculado no lugar da indefinicao
-	fprintf(saida, " %s" , subs);
-
-	rewind(saida);
-	
-	fclose(saida);
+ 	fclose(saida);
 
 }
+
+
+// //funcao que muda os zeros absolutos do arquivo para os valores definidos
+// void resolveIndefinicoes(char *nomeArquivoSaida, TS *TabelaSimbolos)
+// {
+// 	TS* simbolo;
+// 	pilhaPos *pilha;
+
+//  	for (simbolo = TabelaSimbolos; simbolo!= NULL; simbolo = simbolo->prox)
+//  	{
+//  		for (pilha = simbolo->pilhaDePosicoes; pilha != NULL; pilha = pilha->pilhaPosProx)
+//  		{
+//  			resolvePendencia(nomeArquivoSaida, pilha->pos, simbolo->valor);
+
+//  		}		
+//  	}
+
+// }
+
+
+// //funcao que resolve as pensadencias da tabela de simbolos
+// void resolvePendencia(char *nomeArquivoSaida, int posicao, int valor)
+// {
+// 	FILE *saida;
+// 	int numero, contPosicao = 0, seek;
+// 	char *subs, *token;
+// 	fpos_t position;
+	
+// 	subs = (char*)malloc(sizeof(char*));
+// 	token = (char*)malloc(sizeof(char*));
+	
+// 	saida = fopen (nomeArquivoSaida, "r+");
+
+// 	//colocando o ponteiro do arquivo na posicao da indefinicao
+// 	seek = (posicao-1) * 3;
+
+// 	fseek(saida, seek, SEEK_SET);
+
+// 	//lendo se algum offset foi gravado
+// 	fscanf(saida, "%s", token);
+// 	rewind(saida);
+
+// 	fseek(saida, seek, SEEK_SET);
+
+// 	//calculando o valor do simbolo mais o offset
+// 	valor = valor + atoi(token);
+// 	sprintf(subs, "%d", valor);
+
+// 	//coloando o valor calculado no lugar da indefinicao
+// 	fprintf(saida, " %s" , subs);
+
+// 	rewind(saida);
+	
+// 	fclose(saida);
+
+// }
 
 
 
