@@ -4,6 +4,8 @@
 #include <string.h>
 
 #include "M_Sintese.h"
+#include "M_Passagem_Unica.h"
+#include "M_Dicionario.h"
 
 assembly* carregaMenmonicos(assembly *listaAssembly);
 assembly* insereAssembly(assembly* listaAssembly, char *mnemonico, int codigo, int tamanho);
@@ -78,170 +80,306 @@ assembly* carregaMenmonicos(assembly *listaAssembly)
 }
 
 //funcao principal do modulo que gera o cógigo objeto, porem ainda não resolve as pendencias
-void Sintese (infoLinha *linha, char *nomeArquivoSaida, TS *TabelaSimbolos)
+void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 {
 	_Bool status;
 	assembly *listaAssembly = NULL, *resultadoBuscaAssembly;
-	TS *resultadoBuscaSimbolo;
+	TS *resultadoBuscaSimbolo, *resultadoBuscaSimbolo2;
 	FILE *saida;
 	char *EhValido, *EhData;
+	char convertido;
 	int valor;
 	Traducao *traducao;
 
-	// listaAssembly = carregaMenmonicos(listaAssembly);
-
-	traducao = (traducao *)malloc(1*sizeof(traducao));
+	traducao = (Traducao *)malloc(1*sizeof(Traducao));
 
 	saida = fopen(nomeArquivoSaida, "a");
 	
     int i;
-	for ( i = 0; i < linha->numTokens; ++i)
-	{	
-		//verifica se o simbolo é uma instrucao de assembly
-		// resultadoBuscaAssembly = buscaAssembly(listaAssembly, linha->Tokens[i]);
+	for ( i = 0; i < linha_info->numTokens; ++i)
+	{
+		if (!strcmp(linha_info->Tokens[i], "ADD"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
 
-		//se o simbolo for uma instrucao ele grava
-		// if (resultadoBuscaAssembly != NULL)
-		if (!strcmp(linha->Tokens[i], "ADD"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "SUB"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "MULT"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "DIV"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "JMP"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "JMPN"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "JMPP"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "JMPZ"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "COPY"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "LOAD"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "STORE"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "INPUT"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "OUTPUT"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "C_INPUT"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "C_OUTPUT"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "S_INPUT"))
-		{
-			/* code */
-		}
-		else if (!strcmp(linha->Tokens[i], "S_OUTPUT"))
-		{
-			/* code */
-		}else if (!strcmp(linha->Tokens[i], "STOP"))
-		{
-			/* code */
-		}
-		// }
-		// else{
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valor;
+				traducao = addTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				fprintf(saida, "%s\n", traducao->traducao->traducao);
+			}
+			else
+			{
+				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
+				traducao = addTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				fprintf(saida, "%s\n", traducao->traducao->traducao);
+			}
 
-		// 	EhValido = strstr(linha->Tokens[i], ":");
+			
+		}
+		else if (!strcmp(linha_info->Tokens[i], "SUB"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
 
-		// 	//verifica se é uma label, se for ele pula
-		// 	if (EhValido == NULL)
-		// 	{
-		// 		//se nao for instrucao ele procura na tabela de simbolo
-		// 		resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha->Tokens[i]);
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valor;
+				traducao = subTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+			else
+			{
+				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
+				traducao = subTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+		}
+		else if (!strcmp(linha_info->Tokens[i], "MULT"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
 
-		// 		//se for um simbolo ele grava
-		// 		if (resultadoBuscaSimbolo != NULL)
-		// 		{
-		// 			valor = resultadoBuscaSimbolo->valor + resultadoBuscaSimbolo->offset +1;
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valor;
+				traducao = multTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+			else
+			{
+				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
+				traducao = multTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+		}
+		else if (!strcmp(linha_info->Tokens[i], "DIV"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
 
-		// 			if (valor < 0 || valor > 9)
-		// 			{
-		// 				fprintf(saida, " %d", valor);
-		// 			}
-		// 			else
-		// 			{
-		// 				fprintf(saida, " 0%d", valor);	
-		// 			}
-		// 		}
-		// 	}
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valor;
+				traducao = divTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+			else
+			{
+				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
+				traducao = divTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+		}
+		else if (!strcmp(linha_info->Tokens[i], "JMP"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
 
-			// EhData = strstr(linha->Tokens[i], "CONST");
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valor;
+				traducao = jmpTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+			else
+			{
+				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
+				traducao = jmpTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+		}
+		else if (!strcmp(linha_info->Tokens[i], "JMPN"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
 
-			// //verifica se é uma definicao
-			// if(EhData != NULL)
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valor;
+				traducao = jmpnTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+			else
+			{
+				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
+				traducao = jmpnTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+		}
+		else if (!strcmp(linha_info->Tokens[i], "JMPP"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valor;
+				traducao = jmppTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+			else
+			{
+				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
+				traducao = jmppTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+		}
+		else if (!strcmp(linha_info->Tokens[i], "JMPZ"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valor;
+				traducao = jmpzTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+			else
+			{
+				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
+				traducao = jmpzTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+		}
+		else if (!strcmp(linha_info->Tokens[i], "COPY"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+			resultadoBuscaSimbolo2 = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+2]);
+
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				traducao = copyTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, linha_info->Tokens[i+2], resultadoBuscaSimbolo2->valor);
+			}
+			else
+			{
+				traducao = copyTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, linha_info->Tokens[i+2], resultadoBuscaSimbolo2->valorDeDefinicao);
+			}
+		}
+		else if (!strcmp(linha_info->Tokens[i], "LOAD"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valor;
+				traducao = addTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+			else
+			{
+				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
+				traducao = addTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+		}
+		else if (!strcmp(linha_info->Tokens[i], "STORE"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valor;
+				traducao = storeTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+			else
+			{
+				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
+				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
+				traducao = storeTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+			}
+		}
+		else if (!strcmp(linha_info->Tokens[i], "INPUT"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+
+			// if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			// {
-			// 	valor = atoi(linha->Tokens[i+1]);
-
-			// 	if (valor < 0 || valor > 9)
-			// 	{
-			// 		fprintf(saida, " %d", valor);
-			// 	}
-			// 	else
-			// 	{
-			// 		fprintf(saida, " 0%d", valor);	
-			// 	}
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			// }
-
-			// EhData = strstr(linha->Tokens[i], "SPACE");
-
-			//verifica se é para guardar esqpaco
-			// if(EhData != NULL)
+			// else
 			// {
-			// 	if (i+1 == linha->numTokens)
-			// 	{
-			// 		fprintf(saida, " XX");
-			// 	}
-			// 	else
-			// 	{
-			// 		valor = atoi(linha->Tokens[i+1]);
-
-			// 		int j;
-			// 		for ( j = 0; j < valor; ++j)
-			// 		{
-			// 			fprintf(saida, " XX");
-			// 		}
-			// 	}
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			// }
+		}
+		else if (!strcmp(linha_info->Tokens[i], "OUTPUT"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+
+			// if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			// {
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valor);
+			// }
+			// else
+			// {
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
+			// }
+		}
+		else if (!strcmp(linha_info->Tokens[i], "C_INPUT"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+
+			// if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			// {
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valor);
+			// }
+			// else
+			// {
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
+			// }
+		}
+		else if (!strcmp(linha_info->Tokens[i], "C_OUTPUT"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+
+			// if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			// {
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valor);
+			// }
+			// else
+			// {
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
+			// }
+		}
+		else if (!strcmp(linha_info->Tokens[i], "S_INPUT"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+
+			// if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			// {
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valor);
+			// }
+			// else
+			// {
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
+			// }
+		}
+		else if (!strcmp(linha_info->Tokens[i], "S_OUTPUT"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+
+			// if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			// {
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valor);
+			// }
+			// else
+			// {
+			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
+			// }
+		}
+		else if (!strcmp(linha_info->Tokens[i], "STOP"))
+		{
+			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
+
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				traducao = stopTraducao(traducao);
+			}
+			else
+			{
+				traducao = stopTraducao(traducao);
+			}
 		}
 	}
 
-	fclose(saida);
-	
+	fclose(saida);	
 }
 
 
@@ -252,17 +390,17 @@ void declaravariaveis(char *nomeArquivoSaida, TS *TabelaSimbolos)
 
 	saida = fopen(nomeArquivoSaida, "w");
 
- 	for (p = lista; p!= NULL; p = p->prox)
+ 	for (p = TabelaSimbolos; p!= NULL; p = p->prox)
  	{
  		if (!strcmp(p->tipoDeDefinicao, "CONST"))
  		{
- 			fprintf(saida, "\%define %s %d\n", p->nome, p->valorDeDefinicao);
+ 			fprintf(saida, "define %s %d\n", p->nome, p->valorDeDefinicao);
  		}		
  	}
 
  	fprintf(saida, "section .bss\n");
 
- 	for (p = lista; p!= NULL; p = p->prox)
+ 	for (p = TabelaSimbolos; p!= NULL; p = p->prox)
  	{
  		if (!strcmp(p->tipoDeDefinicao, "SPACE"))
  		{
@@ -270,65 +408,12 @@ void declaravariaveis(char *nomeArquivoSaida, TS *TabelaSimbolos)
  		}		
  	}
 
+ 	fprintf(saida, "section .text\nglobal _start\n_start:\n");
+
  	fclose(saida);
 
 }
 
-
-// //funcao que muda os zeros absolutos do arquivo para os valores definidos
-// void resolveIndefinicoes(char *nomeArquivoSaida, TS *TabelaSimbolos)
-// {
-// 	TS* simbolo;
-// 	pilhaPos *pilha;
-
-//  	for (simbolo = TabelaSimbolos; simbolo!= NULL; simbolo = simbolo->prox)
-//  	{
-//  		for (pilha = simbolo->pilhaDePosicoes; pilha != NULL; pilha = pilha->pilhaPosProx)
-//  		{
-//  			resolvePendencia(nomeArquivoSaida, pilha->pos, simbolo->valor);
-
-//  		}		
-//  	}
-
-// }
-
-
-// //funcao que resolve as pensadencias da tabela de simbolos
-// void resolvePendencia(char *nomeArquivoSaida, int posicao, int valor)
-// {
-// 	FILE *saida;
-// 	int numero, contPosicao = 0, seek;
-// 	char *subs, *token;
-// 	fpos_t position;
-	
-// 	subs = (char*)malloc(sizeof(char*));
-// 	token = (char*)malloc(sizeof(char*));
-	
-// 	saida = fopen (nomeArquivoSaida, "r+");
-
-// 	//colocando o ponteiro do arquivo na posicao da indefinicao
-// 	seek = (posicao-1) * 3;
-
-// 	fseek(saida, seek, SEEK_SET);
-
-// 	//lendo se algum offset foi gravado
-// 	fscanf(saida, "%s", token);
-// 	rewind(saida);
-
-// 	fseek(saida, seek, SEEK_SET);
-
-// 	//calculando o valor do simbolo mais o offset
-// 	valor = valor + atoi(token);
-// 	sprintf(subs, "%d", valor);
-
-// 	//coloando o valor calculado no lugar da indefinicao
-// 	fprintf(saida, " %s" , subs);
-
-// 	rewind(saida);
-	
-// 	fclose(saida);
-
-// }
 
 
 

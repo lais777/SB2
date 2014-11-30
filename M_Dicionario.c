@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "M_Dicionario.h"
+#include "M_Sintese.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -708,41 +709,41 @@ Traducao * constTraducao(Traducao * linha, char * x, char * y )
 
 }
 
-int main()
-{
+// int main()
+// {
 
 
-Traducao *teste = (Traducao *)malloc(sizeof(Traducao)); 
-//teste = addTraducao(teste, "LAIS","12");
+// Traducao *teste = (Traducao *)malloc(sizeof(Traducao)); 
+// //teste = addTraducao(teste, "LAIS","12");
 
-//printf("%s\n",rrteste->traducao->traducao);
-  // printf("%s\n", teste->opcode->traducao);
+// //printf("%s\n",rrteste->traducao->traducao);
+//   // printf("%s\n", teste->opcode->traducao);
 
-//teste = jmpnTraducao(teste, "LAIS", "7");
-//PrintTraducao(teste);
-
-
-//teste = divTraducao(teste, "LAIS", "7");
-
-//teste = storeTraducao(teste, "LAIS", "7");
-//teste = multTraducao(teste, "LAIS", "7");
-
-//teste = subTraducao(teste, "LAIS", "7");
+// //teste = jmpnTraducao(teste, "LAIS", "7");
+// //PrintTraducao(teste);
 
 
-//teste = copyTraducao(teste, "LAIS", "7", "LUIZ", "8");
-//teste = jmpzTraducao(teste, "LAIS", "7");
-//teste = stopTraducao(teste);
-//teste = sectiontextTraducao(teste);
-teste = constTraducao(teste, "LAIS", "LUIZ" );
-//teste = spaceTraducao(teste , "LAIS", "7", "LUIZ", "8");
-//teste = jmpTraducao(teste, "LAIS", "7");
-PrintTraducao(teste);
+// //teste = divTraducao(teste, "LAIS", "7");
+
+// //teste = storeTraducao(teste, "LAIS", "7");
+// //teste = multTraducao(teste, "LAIS", "7");
+
+// //teste = subTraducao(teste, "LAIS", "7");
 
 
-return 0;
+// //teste = copyTraducao(teste, "LAIS", "7", "LUIZ", "8");
+// //teste = jmpzTraducao(teste, "LAIS", "7");
+// //teste = stopTraducao(teste);
+// //teste = sectiontextTraducao(teste);
+// teste = constTraducao(teste, "LAIS", "LUIZ" );
+// //teste = spaceTraducao(teste , "LAIS", "7", "LUIZ", "8");
+// //teste = jmpTraducao(teste, "LAIS", "7");
+// PrintTraducao(teste);
 
-}
+
+// return 0;
+
+// }
 
 
 

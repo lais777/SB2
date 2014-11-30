@@ -25,8 +25,6 @@ void resolvePassagemUnica(char *nomeEntrada, char *nomeSaida)
 	TS * tabelaSims = NULL;
 	int * numSim = NULL;
 	opLinha * linhas = NULL;
-	saida = fopen (nomeSaida, "w");
-	fclose(saida);
 
 	ptr_file =fopen(nomeEntrada,"r");
 
@@ -54,17 +52,32 @@ void resolvePassagemUnica(char *nomeEntrada, char *nomeSaida)
 	
 	 	tabelaSims = retornaTabelaSimbolos(linha, tabelaSims,  posicao);
 	 	posicao+= contaSomaPos( linha); 
-
-	 	//linhas = AnaliseSintatica( linha, tabelaSims,linhas);
-	 
-	// 	//chamando a funcao de sintese para gerar o codigo objeto
-		//Sintese (linha, nomeSaida, tabelaSims);
 	 }
 	 
+	fclose(ptr_file);
 
-	// analiseSemantica(linhas, tabelaSims);
-	// //resolvendo as indefinicoes de simbolos do codigo objeto
-	 //resolveIndefinicoes(nomeSaida,tabelaSims);
+	declaravariaveis(nomeSaida, tabelaSims);
+
+	ptr_file =fopen(nomeEntrada,"r");
+
+	//laco principal que le o arquivo de codigo
+	while(1)
+	{
+		fim = Analise (linha, ptr_file, tabelaSims, numSim);
+
+		if(fim)
+		{
+			break;
+		}
+		EscreveNumLinha(linha, j);
+
+		 j++;
+	 	posicao+= contaSomaPos( linha); 
+
+	 	Sintese (linha, nomeSaida, tabelaSims);
+
+	 }
+
 	fclose(ptr_file);
 }
 
