@@ -99,7 +99,7 @@ linha_Instrucao* insereInstrucao(linha_Instrucao* linhaInstrucao, char *instruca
 	return listaAux;
 }
 
-Traducao * addTraducao(Traducao * linha, char * x, char * op)
+Traducao * addTraducao(Traducao * linha, char * x, int op)
 {
   // linha_Instrucao* listaAux = (linha_Instrucao *)malloc(sizeof(linha_Instrucao));
    linha_Instrucao* listaAuxTraducao = NULL;
@@ -109,10 +109,10 @@ Traducao * addTraducao(Traducao * linha, char * x, char * op)
    int opReg = OPax;
 
    char *InstrucaoLinha  = (char *)malloc((13 + strlen(x))*sizeof(char));
-   char *OPcodes = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes = (char *) malloc( 20*sizeof(char));
 
    sprintf(InstrucaoLinha,"add ax , [%s]", x);
-   sprintf(OPcodes,"%d %d %s", opInst, opReg, op); //VER O QUE FAZER AQUI SOBRE O [X]
+   sprintf(OPcodes,"66 03 05 %x 00 00 00",op); //VER O QUE FAZER AQUI SOBRE O [X]
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -127,7 +127,7 @@ Traducao * addTraducao(Traducao * linha, char * x, char * op)
  return linha;
 }
 
-Traducao * jmpnTraducao(Traducao * linha, char * x, char * op)
+Traducao * jmpnTraducao(Traducao * linha, char * x, int op)
 {
   // linha_Instrucao* listaAux = (linha_Instrucao *)malloc(sizeof(linha_Instr//ucao));
    int opInst = OPadd;
@@ -139,10 +139,10 @@ Traducao * jmpnTraducao(Traducao * linha, char * x, char * op)
 
    /*======================== Primeira Linha ======================= */
    char *InstrucaoLinha  = (char *)malloc((10 + strlen(x))*sizeof(char));
-   char *OPcodes = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha,"cmp ax , 0");
-   sprintf(OPcodes,"%d %d 0", OPcmp, OPax);
+   sprintf(OPcodes,"66 83 f8 00");
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -152,10 +152,10 @@ Traducao * jmpnTraducao(Traducao * linha, char * x, char * op)
 
    /*======================== Segunda Linha ======================= */
    char *InstrucaoLinha2  = (char *)malloc((3 + strlen(x))*sizeof(char));
-   char *OPcodes2 = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes2 = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha2,"jl %s",x);
-   sprintf(OPcodes2,"%d %s", OPjl, op);
+   sprintf(OPcodes2,"7c %x", op);
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
 
@@ -172,7 +172,7 @@ Traducao * jmpnTraducao(Traducao * linha, char * x, char * op)
 }
 
 
-Traducao * loadTraducao(Traducao * linha, char * x, char * op)
+Traducao * loadTraducao(Traducao * linha, char * x, int op)
 {
 
    linha_Instrucao* listaAuxTraducao = NULL;
@@ -182,10 +182,10 @@ Traducao * loadTraducao(Traducao * linha, char * x, char * op)
    int opReg = OPax;
    
    char *InstrucaoLinha  = (char *)malloc((10 + strlen(x))*sizeof(char));
-   char *OPcodes = (char *) malloc(( 3 + strlen(op))*sizeof(char));
+   char *OPcodes = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha,"mov ax , [%s]", x);
-   sprintf(OPcodes,"%d %d %s",OPmov , OPax, op);  //VER O QUE FAZER AQUI SOBRE O [X]
+   sprintf(OPcodes,"66 a3 %x 00 00 00", op);  //VER O QUE FAZER AQUI SOBRE O [X]
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -199,7 +199,7 @@ Traducao * loadTraducao(Traducao * linha, char * x, char * op)
 
 }
 
-Traducao * storeTraducao(Traducao * linha, char * x, char * op)
+Traducao * storeTraducao(Traducao * linha, char * x, int op)
 {
 
    linha_Instrucao* listaAuxTraducao = NULL;
@@ -209,10 +209,10 @@ Traducao * storeTraducao(Traducao * linha, char * x, char * op)
    int opReg = OPax;
    
    char *InstrucaoLinha  = (char *)malloc((10 + strlen(x))*sizeof(char));
-   char *OPcodes = (char *) malloc(( 3 + strlen(op))*sizeof(char));
+   char *OPcodes = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha,"mov WORD [%s] , AX ", x);
-   sprintf(OPcodes,"%d %s %d",OPmov , op,  OPax);  //VER O QUE FAZER AQUI SOBRE O [X] e sobre WORD
+   sprintf(OPcodes,"66 a3 %x 00 00 00",op);  //VER O QUE FAZER AQUI SOBRE O [X] e sobre WORD
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -228,7 +228,7 @@ Traducao * storeTraducao(Traducao * linha, char * x, char * op)
 
 }
 
-Traducao * multTraducao(Traducao * linha, char * x, char * op)
+Traducao * multTraducao(Traducao * linha, char * x, int  op)
 {
 
    linha_Instrucao* listaAuxTraducao = NULL;
@@ -238,10 +238,10 @@ Traducao * multTraducao(Traducao * linha, char * x, char * op)
    int opReg = OPax;
    
    char *InstrucaoLinha  = (char *)malloc((8 + strlen(x))*sizeof(char));
-   char *OPcodes = (char *) malloc(( 3 + strlen(op))*sizeof(char));
+   char *OPcodes = (char *) malloc(20*sizeof(char));
 
-   sprintf(InstrucaoLinha,"imul [%s]", x);
-   sprintf(OPcodes,"%d %s",OPimul , op);  //VER O QUE FAZER AQUI SOBRE O [X] e sobre WORD
+   sprintf(InstrucaoLinha,"imul word [%s]", x);
+   sprintf(OPcodes,"66 f7 2d %x 00 00 00" , op);  //VER O QUE FAZER AQUI SOBRE O [X] e sobre WORD
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -258,7 +258,7 @@ Traducao * multTraducao(Traducao * linha, char * x, char * op)
 }
 
 
-Traducao * divTraducao(Traducao * linha, char * x, char * op)
+Traducao * divTraducao(Traducao * linha, char * x, int op)
 {
 
 // linha_Instrucao* listaAux = (linha_Instrucao *)malloc(sizeof(linha_Instr//ucao));
@@ -271,10 +271,10 @@ Traducao * divTraducao(Traducao * linha, char * x, char * op)
 
    /*======================== Primeira Linha ======================= */
    char *InstrucaoLinha  = (char *)malloc( 10 *sizeof(char));
-   char *OPcodes = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha,"cwd ax");
-   sprintf(OPcodes,"%d %d", OPcwd, OPax);
+   sprintf(OPcodes,"66 99");
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -284,14 +284,14 @@ Traducao * divTraducao(Traducao * linha, char * x, char * op)
 
    /*======================== Segunda Linha ======================= */
    char *InstrucaoLinha2  = (char *)malloc((10+ strlen(x))*sizeof(char));
-   char *OPcodes2 = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes2 = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha2,"idiv WORD [%s]",x);//VERIFICAR SE PRECISA de OPCODE para WORD
-   sprintf(OPcodes2,"%d %s", OPidiv, op);
+   sprintf(OPcodes2,"66 f7 3d %x 00 00 00", op);
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
 
-   
+ 
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha2);
    listaAuxOpcode = insereInstrucao(listaAuxOpcode, OPcodes2);
    /*======================== FIM Segunda Linha ======================= */
@@ -304,7 +304,7 @@ Traducao * divTraducao(Traducao * linha, char * x, char * op)
 
 }
 
-Traducao * subTraducao(Traducao * linha, char * x, char * op)
+Traducao * subTraducao(Traducao * linha, char * x, int op)
 {
 
    linha_Instrucao* listaAuxTraducao = NULL;
@@ -314,10 +314,12 @@ Traducao * subTraducao(Traducao * linha, char * x, char * op)
    int opReg = OPax;
    
    char *InstrucaoLinha  = (char *)malloc((11 + strlen(x))*sizeof(char));
-   char *OPcodes = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha,"sub ax , [%s]", x);
-   sprintf(OPcodes,"%d %d %s",OPsub,OPax, op);  //VER O QUE FAZER AQUI SOBRE O [X] e sobre WORD
+   sprintf(OPcodes,"66 2b 05 %x 00 00 00", op);  //VER O QUE FAZER AQUI SOBRE O [X] e sobre WORD
+
+
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -333,7 +335,7 @@ Traducao * subTraducao(Traducao * linha, char * x, char * op)
 
 }
 
-Traducao * copyTraducao(Traducao * linha, char * x, char * op, char * y, char * opY)
+Traducao * copyTraducao(Traducao * linha, char * x, int op, char * y, int opY)
 {
   // linha_Instrucao* listaAux = (linha_Instrucao *)malloc(sizeof(linha_Instr//ucao));
    int opInst = OPadd;
@@ -345,10 +347,10 @@ Traducao * copyTraducao(Traducao * linha, char * x, char * op, char * y, char * 
 
    /*======================== Primeira Linha ======================= */
    char *InstrucaoLinha  = (char *)malloc(7 *sizeof(char));
-   char *OPcodes = (char *) malloc( 4 *sizeof(char));
+   char *OPcodes = (char *) malloc( 20 *sizeof(char));
 
    sprintf(InstrucaoLinha,"push dx");
-   sprintf(OPcodes,"%d %d", OPpush, OPdx);
+   sprintf(OPcodes,"66 52");
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -358,10 +360,10 @@ Traducao * copyTraducao(Traducao * linha, char * x, char * op, char * y, char * 
 
    /*======================== Segunda Linha ======================= */
    char *InstrucaoLinha2  = (char *)malloc((10 + strlen(y))*sizeof(char));
-   char *OPcodes2 = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes2 = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha2,"mov dx, [%s]",y);
-   sprintf(OPcodes2,"%d %d %s", OPmov, OPdx, opY);
+   sprintf(OPcodes2,"66 8b 15 %x 00 00 00", opY);
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
 
@@ -372,10 +374,10 @@ Traducao * copyTraducao(Traducao * linha, char * x, char * op, char * y, char * 
 
    /*======================== Terceira Linha ======================= */
    char *InstrucaoLinha3  = (char *)malloc((15 + strlen(x))*sizeof(char));
-   char *OPcodes3 = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes3 = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha3,"mov WORD [%s], dx",x);
-   sprintf(OPcodes3,"%d %s %d ", OPmov, op, OPdx);
+   sprintf(OPcodes3,"66 89 15 %x 00 00 00", op);
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
 
@@ -386,10 +388,10 @@ Traducao * copyTraducao(Traducao * linha, char * x, char * op, char * y, char * 
 
 	/*======================== Quarta Linha ======================= */
    char *InstrucaoLinha4  = (char *)malloc(7 *sizeof(char));
-   char *OPcodes4 = (char *) malloc( 4 *sizeof(char));
+   char *OPcodes4 = (char *) malloc( 20 *sizeof(char));
 
    sprintf(InstrucaoLinha4,"pop dx");
-   sprintf(OPcodes4,"%d %d", OPpop, OPdx);
+   sprintf(OPcodes4,"66 5a");
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -406,7 +408,7 @@ Traducao * copyTraducao(Traducao * linha, char * x, char * op, char * y, char * 
  return linha;
 }
 
-Traducao * jmppTraducao(Traducao * linha, char * x, char * op)
+Traducao * jmppTraducao(Traducao * linha, char * x, int op)
 {
 
 // linha_Instrucao* listaAux = (linha_Instrucao *)malloc(sizeof(linha_Instr//ucao));
@@ -419,10 +421,10 @@ Traducao * jmppTraducao(Traducao * linha, char * x, char * op)
 
    /*======================== Primeira Linha ======================= */
    char *InstrucaoLinha  = (char *)malloc( 10 *sizeof(char));
-   char *OPcodes = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha,"cmp ax, 0");
-   sprintf(OPcodes,"%d %d 0", OPcmp, OPax);//
+   sprintf(OPcodes,"66 83 f8 00");//
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -432,10 +434,10 @@ Traducao * jmppTraducao(Traducao * linha, char * x, char * op)
 
    /*======================== Segunda Linha ======================= */
    char *InstrucaoLinha2  = (char *)malloc((10+ strlen(x))*sizeof(char));
-   char *OPcodes2 = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes2 = (char *) malloc(10*sizeof(char));
 
    sprintf(InstrucaoLinha2,"jg %s",x);//VERIFICAR SE PRECISA de OPCODE para WORD
-   sprintf(OPcodes2,"%d %s", OPjg, op);
+   sprintf(OPcodes2,"7f %x", op);
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
 
@@ -453,7 +455,7 @@ Traducao * jmppTraducao(Traducao * linha, char * x, char * op)
 }
 
 
-Traducao * jmpTraducao(Traducao * linha, char * x, char * op)
+Traducao * jmpTraducao(Traducao * linha, char * x, int op)
 {
 
    linha_Instrucao* listaAuxTraducao = NULL;
@@ -463,10 +465,10 @@ Traducao * jmpTraducao(Traducao * linha, char * x, char * op)
    int opReg = OPax;
    
    char *InstrucaoLinha  = (char *)malloc((4 + strlen(x))*sizeof(char));
-   char *OPcodes = (char *) malloc(( 1 + strlen(op))*sizeof(char));
+   char *OPcodes = (char *) malloc(10*sizeof(char));
 
    sprintf(InstrucaoLinha,"jmp %s", x);
-   sprintf(OPcodes,"%d %s",OPjmp, op);  //VER O QUE FAZER AQUI SOBRE O [X] e sobre WORD
+   sprintf(OPcodes,"eb %x", op);  //VER O QUE FAZER AQUI SOBRE O [X] e sobre WORD
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -483,7 +485,7 @@ Traducao * jmpTraducao(Traducao * linha, char * x, char * op)
 }
 
 
-Traducao * jmpzTraducao(Traducao * linha, char * x, char * op)
+Traducao * jmpzTraducao(Traducao * linha, char * x, int op)
 {
   // linha_Instrucao* listaAux = (linha_Instrucao *)malloc(sizeof(linha_Instr//ucao));
    int opInst = OPadd;
@@ -495,10 +497,10 @@ Traducao * jmpzTraducao(Traducao * linha, char * x, char * op)
 
    /*======================== Primeira Linha ======================= */
    char *InstrucaoLinha  = (char *)malloc((10 + strlen(x))*sizeof(char));
-   char *OPcodes = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha,"cmp ax , 0");
-   sprintf(OPcodes,"%d %d 0", OPcmp, OPax);
+   sprintf(OPcodes,"66 83 f8 00");
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -508,10 +510,10 @@ Traducao * jmpzTraducao(Traducao * linha, char * x, char * op)
 
    /*======================== Segunda Linha ======================= */
    char *InstrucaoLinha2  = (char *)malloc((3 + strlen(x))*sizeof(char));
-   char *OPcodes2 = (char *) malloc(( 4 + strlen(op))*sizeof(char));
+   char *OPcodes2 = (char *) malloc(20*sizeof(char));
 
    sprintf(InstrucaoLinha2,"je %s",x);
-   sprintf(OPcodes2,"%d %s", OPje, op);
+   sprintf(OPcodes2,"74 %x", op);
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
 
@@ -539,10 +541,10 @@ Traducao * stopTraducao(Traducao * linha)
 
    /*======================== Primeira Linha ======================= */
    char *InstrucaoLinha  = (char *)malloc(9 *sizeof(char));
-   char *OPcodes = (char *) malloc( 4 *sizeof(char));
+   char *OPcodes = (char *) malloc( 20 *sizeof(char));
 
    sprintf(InstrucaoLinha,"mov eax, 1");
-   sprintf(OPcodes,"%d %d %d", OPmov, OPeax, 1);
+   sprintf(OPcodes,"b8 01 00 00 00");
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -552,10 +554,10 @@ Traducao * stopTraducao(Traducao * linha)
 
    /*======================== Segunda Linha ======================= */
    char *InstrucaoLinha2  = (char *)malloc(10*sizeof(char));
-   char *OPcodes2 = (char *) malloc( 4*sizeof(char));
+   char *OPcodes2 = (char *) malloc( 20*sizeof(char));
 
    sprintf(InstrucaoLinha2,"mov ebx, 0,");
-   sprintf(OPcodes2,"%d %d %d", OPmov, OPebx, 0);
+   sprintf(OPcodes2,"bb 00 00 00 00");
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
 
@@ -566,10 +568,10 @@ Traducao * stopTraducao(Traducao * linha)
 
    /*======================== Terceira Linha ======================= */
    char *InstrucaoLinha3  = (char *)malloc(8*sizeof(char));
-   char *OPcodes3 = (char *) malloc( 3*sizeof(char));
+   char *OPcodes3 = (char *) malloc( 10*sizeof(char));
 
    sprintf(InstrucaoLinha3,"int 80h");
-   sprintf(OPcodes3,"%d %d ", OPint, 0x80);
+   sprintf(OPcodes3,"cd 80");
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
 
@@ -620,7 +622,7 @@ Traducao * sectiondataTraducao(Traducao * linha)
 
 
 
-Traducao * spaceTraducao(Traducao * linha, char * x, char * op, char * y, char * opY )
+Traducao * spaceTraducao(Traducao * linha, char * x, int op, char * y, int opY )
 {
 
    linha_Instrucao* listaAuxTraducao = NULL;
@@ -633,7 +635,7 @@ Traducao * spaceTraducao(Traducao * linha, char * x, char * op, char * y, char *
    char *OPcodes = (char *) malloc( 4*sizeof(char));
 
    sprintf(InstrucaoLinha,"%s: space %s", x,y);
-   sprintf(OPcodes,"%s",op);  //VER O QUE FAZER AQUI SOBRE O [X] e sobre WORD
+   sprintf(OPcodes,"%d",op);  //VER O QUE FAZER AQUI SOBRE O [X] e sobre WORD
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
