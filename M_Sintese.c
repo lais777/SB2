@@ -534,7 +534,7 @@ void declaravariaveis(char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaid
 {
 	TS* p;
 	FILE *saida, *saidaBin, *saidaDebug;
-	// char percent = "%";
+	char percent = "%";
 
 	saida = fopen(nomeArquivoSaida, "w");
 	saidaBin = fopen(nomeSaidaBin, "wb");
@@ -542,14 +542,18 @@ void declaravariaveis(char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaid
 
  	for (p = TabelaSimbolos; p!= NULL; p = p->prox)
  	{
+ 		printf("tipoDeDefinicao = %s\n", p->tipoDeDefinicao);
  		if (!strcmp(p->tipoDeDefinicao, "CONST"))
  		{
- 			// fprintf(saida, "%c", percent);
+ 			printf("entrei no if\n");
+ 			fprintf(saida, "%c", percent);
+
  			fprintf(saida, "define %s %d\n", p->nome, p->valorDeDefinicao);
  		}		
  	}
- 	printf("entrei funcao\n");
+ 	
  	fprintf(saida, "section .bss\n");
+ 	fprintf(saida, "io_buf resb 12\n");
 
  	for (p = TabelaSimbolos; p!= NULL; p = p->prox)
  	{
