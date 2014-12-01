@@ -1,5 +1,5 @@
-%define VAR 3
-%define VARIAVEL 2
+<define VAR 3
+<define VARIAVEL 2
 section .bss
 io_buf resb 12
 Z resw 0

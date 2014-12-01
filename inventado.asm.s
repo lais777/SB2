@@ -1,9 +1,4 @@
-%define VAR 3
-%define VARIAVEL 2
 section .bss
-io_buf resb 12
-Z resw 0
-X resw 2
 section .text
 global _start
 _start:
@@ -76,8 +71,3 @@ int 80h
 pop eax 
 leave 
 ret 4 
-add ax , [VAR]
-imul word [VAR]
-mov eax, 1
-mov ebx, 0
-int 80h

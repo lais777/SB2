@@ -96,11 +96,7 @@ int * converteBinario(char * string)
       }
    }
 
-   printf("numGrupos = %d\n",numGrupos );
-   for(i = 0;i < numGrupos;i++)
-   {
-      printf("\nGrupo[%d] = %d", i, Grupos[i]);
-   }
+   
    return Grupos;
 }
 
@@ -183,6 +179,15 @@ Traducao * addTraducao(Traducao * linha, char * x, int op,FILE *arq)
    Grupos =  converteBinario(OPcodes);
 
    fwrite(Grupos, sizeof(int),7,arq );
+   int i;
+
+   for ( i = 0; i < 7; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
+
+
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -225,6 +230,14 @@ Traducao * jmpnTraducao(Traducao * linha, char * x, int op,FILE *arq)
 
    fwrite(Grupos, sizeof(int),4,arq );
 
+   int i;
+
+   for ( i = 0; i < 4; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
+
    
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha);
    listaAuxOpcode = insereInstrucao(listaAuxOpcode, OPcodes);
@@ -245,8 +258,13 @@ Traducao * jmpnTraducao(Traducao * linha, char * x, int op,FILE *arq)
 
    Grupos =  converteBinario(OPcodes2);
 
+
    fwrite(Grupos, sizeof(int),2,arq );
-   
+   for ( i = 0; i < 2; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha2);
    listaAuxOpcode = insereInstrucao(listaAuxOpcode, OPcodes2);
@@ -284,6 +302,14 @@ Traducao * loadTraducao(Traducao * linha, char * x, int op,FILE *arq)
    Grupos =  converteBinario(OPcodes);
 
    fwrite(Grupos, sizeof(int),6,arq );
+
+   int i;
+
+   for ( i = 0; i < 6; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha);
    listaAuxOpcode = insereInstrucao(listaAuxOpcode, OPcodes);
 
@@ -318,6 +344,12 @@ Traducao * storeTraducao(Traducao * linha, char * x, int op,FILE *arq)
    Grupos =  converteBinario(OPcodes);
 
    fwrite(Grupos, sizeof(int),6,arq );
+   int i;
+   for ( i = 0; i < 6; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
 
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha);
@@ -327,7 +359,6 @@ Traducao * storeTraducao(Traducao * linha, char * x, int op,FILE *arq)
    linha->opcode = listaAuxOpcode;
 
  return linha;
-
 
 
 }
@@ -357,6 +388,13 @@ Traducao * multTraducao(Traducao * linha, char * x, int  op,FILE *arq)
 
    fwrite(Grupos, sizeof(int),7,arq );
    
+   int i;
+
+   for ( i = 0; i < 7; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");   
 
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha);
    listaAuxOpcode = insereInstrucao(listaAuxOpcode, OPcodes);
@@ -397,6 +435,14 @@ Traducao * divTraducao(Traducao * linha, char * x, int op,FILE *arq)
    Grupos =  converteBinario(OPcodes);
 
    fwrite(Grupos, sizeof(int),2,arq );
+
+   int i;
+
+   for ( i = 0; i < 2; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
@@ -421,6 +467,13 @@ Traducao * divTraducao(Traducao * linha, char * x, int op,FILE *arq)
    Grupos =  converteBinario(OPcodes2);
 
    fwrite(Grupos, sizeof(int),7,arq );
+
+
+   for ( i = 0; i < 7; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
  
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha2);
@@ -457,6 +510,15 @@ Traducao * subTraducao(Traducao * linha, char * x, int op,FILE *arq)
    Grupos =  converteBinario(OPcodes);
 
    fwrite(Grupos, sizeof(int),7,arq );
+
+
+   int i;
+
+   for ( i = 0; i < 7; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
 
    //printf("%s\n",InstrucaoLinha);
@@ -501,6 +563,14 @@ Traducao * copyTraducao(Traducao * linha, char * x, int op, char * y, int opY,FI
 
    fwrite(Grupos, sizeof(int),2,arq );
 
+   int i;
+
+   for ( i = 0; i < 2; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
+
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha);
    listaAuxOpcode = insereInstrucao(listaAuxOpcode, OPcodes);
    /*======================== FIM Primeira Linha ======================= */
@@ -522,6 +592,12 @@ Traducao * copyTraducao(Traducao * linha, char * x, int op, char * y, int opY,FI
 
    fwrite(Grupos, sizeof(int),7,arq );
 
+   for ( i = 0; i < 7; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
+
    
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha2);
    listaAuxOpcode = insereInstrucao(listaAuxOpcode, OPcodes2);
@@ -542,6 +618,14 @@ Traducao * copyTraducao(Traducao * linha, char * x, int op, char * y, int opY,FI
    Grupos =  converteBinario(OPcodes3);
 
    fwrite(Grupos, sizeof(int),7,arq );
+
+   
+
+   for ( i = 0; i < 7; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha3);
    listaAuxOpcode = insereInstrucao(listaAuxOpcode, OPcodes3);
@@ -560,6 +644,13 @@ Traducao * copyTraducao(Traducao * linha, char * x, int op, char * y, int opY,FI
    Grupos =  converteBinario(OPcodes4);
 
    fwrite(Grupos, sizeof(int),2,arq );
+
+
+   for ( i = 0; i < 2; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
@@ -604,6 +695,14 @@ Traducao * jmppTraducao(Traducao * linha, char * x, int op,FILE *arq)
    Grupos =  converteBinario(OPcodes);
 
    fwrite(Grupos, sizeof(int),4,arq );
+
+   int i;
+
+   for ( i = 0; i < 4; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
 
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha);
@@ -626,6 +725,12 @@ Traducao * jmppTraducao(Traducao * linha, char * x, int op,FILE *arq)
    Grupos =  converteBinario(OPcodes2);
 
    fwrite(Grupos, sizeof(int),2,arq );
+
+   for ( i = 0; i < 2; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha2);
    listaAuxOpcode = insereInstrucao(listaAuxOpcode, OPcodes2);
@@ -664,6 +769,14 @@ Traducao * jmpTraducao(Traducao * linha, char * x, int op,FILE *arq)
    Grupos =  converteBinario(OPcodes);
 
    fwrite(Grupos, sizeof(int),2,arq );
+
+   int i;
+
+   for ( i = 0; i < 2; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
 
    listaAuxTraducao = insereInstrucao(listaAuxTraducao, InstrucaoLinha);
@@ -704,6 +817,14 @@ Traducao * jmpzTraducao(Traducao * linha, char * x, int op,FILE *arq)
 
    fwrite(Grupos, sizeof(int),4,arq );
    
+
+   int i;
+
+   for ( i = 0; i < 4; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -724,6 +845,12 @@ Traducao * jmpzTraducao(Traducao * linha, char * x, int op,FILE *arq)
 
    fwrite(Grupos, sizeof(int),2,arq );
    
+
+   for ( i = 0; i < 2; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
 
@@ -763,6 +890,14 @@ Traducao * stopTraducao(Traducao * linha,FILE *arq)
    Grupos =  converteBinario(OPcodes);
 
    fwrite(Grupos, sizeof(int),5,arq );
+
+   int i;
+
+   for ( i = 0; i < 5; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
@@ -784,6 +919,13 @@ Traducao * stopTraducao(Traducao * linha,FILE *arq)
    Grupos =  converteBinario(OPcodes2);
 
    fwrite(Grupos, sizeof(int),5,arq );
+
+
+   for ( i = 0; i < 5; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
 
@@ -804,6 +946,13 @@ Traducao * stopTraducao(Traducao * linha,FILE *arq)
    Grupos =  converteBinario(OPcodes3);
 
    fwrite(Grupos, sizeof(int),2,arq );
+
+
+   for ( i = 0; i < 2; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
@@ -987,6 +1136,14 @@ Traducao * outputTraducao(Traducao * linha, char * x, int op, FILE *arq )
 
    fwrite(Grupos, sizeof(int),5,arq );
    
+
+   int i;
+
+   for ( i = 0; i < 5; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
 
@@ -1008,6 +1165,12 @@ Traducao * outputTraducao(Traducao * linha, char * x, int op, FILE *arq )
 
    fwrite(Grupos, sizeof(int),7,arq );
    
+
+   for ( i = 0; i < 7; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
 
@@ -1052,6 +1215,14 @@ Traducao * inputTraducao(Traducao * linha, char * x, int op,FILE *arq )
    Grupos =  converteBinario(OPcodes);
 
    fwrite(Grupos, sizeof(int),6,arq );
+
+   int i;
+
+   for ( i = 0; i < 6; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
    //printf("%s\n",InstrucaoLinha);
    //printf("%s\n", OPcodes);
@@ -1073,6 +1244,13 @@ Traducao * inputTraducao(Traducao * linha, char * x, int op,FILE *arq )
    Grupos =  converteBinario(OPcodes2);
 
    fwrite(Grupos, sizeof(int),7,arq );
+
+
+   for ( i = 0; i < 7; i++)
+   {
+      printf("%d ", Grupos[i]);
+   }
+   printf("\n");
    
    //printf("%s\n",InstrucaoLinha2);
    //printf("%s\n", OPcodes2);
