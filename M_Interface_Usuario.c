@@ -11,7 +11,7 @@
 
 int main(int argc, char const *argv[])
 {
-	char *nomeEntrada;
+	// char *nomeEntrada;
 	char *nomeSaidaPre, *nomeSaidaMacro, *nomeSaida, *nomeSaidaBin, *nomeSaidaDebug;
 
 	// nomeEntrada = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
