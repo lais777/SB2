@@ -29,24 +29,26 @@ extern struct Traducao *linha;
 
 // typedef struct traducao Traducao;
 
-
-Traducao * addTraducao(Traducao * linha, char * x, int op);
-Traducao * jmpnTraducao(Traducao * linha, char * x, int op);
-Traducao * loadTraducao(Traducao * linha, char * x, int op);
-Traducao * storeTraducao(Traducao * linha, char * x, int op);
-Traducao * multTraducao(Traducao * linha, char * x, int op);
-Traducao * divTraducao(Traducao * linha, char * x, int op);
-Traducao * subTraducao(Traducao * linha, char * x, int op);
-Traducao * copyTraducao(Traducao * linha, char * x, int op, char * y, int opY);
-Traducao * jmppTraducao(Traducao * linha, char * x, int op);
-Traducao * jmpTraducao(Traducao * linha, char * x, int op);
-Traducao * jmpzTraducao(Traducao * linha, char * x, int op);
-Traducao * stopTraducao(Traducao * linha);
+int * converteBinario(char * string);
+Traducao * addTraducao(Traducao * linha, char * x, int op, FILE *arq);
+Traducao * jmpnTraducao(Traducao * linha, char * x, int op, FILE *arq);
+Traducao * loadTraducao(Traducao * linha, char * x, int op, FILE *arq);
+Traducao * storeTraducao(Traducao * linha, char * x, int op,FILE *arq);
+Traducao * multTraducao(Traducao * linha, char * x, int op,FILE *arq);
+Traducao * divTraducao(Traducao * linha, char * x, int op,FILE *arq);
+Traducao * subTraducao(Traducao * linha, char * x, int op,FILE *arq);
+Traducao * copyTraducao(Traducao * linha, char * x, int op, char * y, int opY,FILE *arq);
+Traducao * jmppTraducao(Traducao * linha, char * x, int op,FILE *arq);
+Traducao * jmpTraducao(Traducao * linha, char * x, int op,FILE *arq);
+Traducao * jmpzTraducao(Traducao * linha, char * x, int op,FILE *arq);
+Traducao * stopTraducao(Traducao * linha,FILE *arq);
 Traducao * sectiondataTraducao(Traducao * linha);
-Traducao * spaceTraducao(Traducao * linha, char * x, int op, char * y, int  opY );
+Traducao * spaceTraducao(Traducao * linha, char * x, int op, char * y, int  opY,FILE *arq );
 Traducao * sectiontextTraducao(Traducao * linha);
 Traducao * sectiontextTraducao(Traducao * linha);
 Traducao * constTraducao(Traducao * linha, char * x, char * y );
+Traducao * inputTraducao(Traducao * linha, char * x, int op, FILE *arq  );
+Traducao * outputTraducao(Traducao * linha, char * x, int op, FILE *arq );
 
 
 //struct para guardar a macro
