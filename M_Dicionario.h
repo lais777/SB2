@@ -9,14 +9,14 @@ extern struct Traducao *linha;
 // extern struct linha_Instrucao *listaAuxTraducao;
 
 
-// struct linhaInstrucao
-// {
-//     char * traducao;
-//     struct linhaInstrucao *prox;
-//     struct linhaInstrucao *ant;
-// };
+struct linhaInstrucao
+{
+    char * traducao;
+    struct linhaInstrucao *prox;
+    struct linhaInstrucao *ant;
+};
 
-// typedef struct linhaInstrucao linha_Instrucao;
+typedef struct linhaInstrucao linha_Instrucao;
 
 // struct traducao
 // {

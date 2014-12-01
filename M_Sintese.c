@@ -126,13 +126,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = addTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = addTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = addTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = addTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			}
 
 			gravandoNoArquivo(traducao->traducao, saida);
@@ -146,13 +146,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = subTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = subTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = subTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = subTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 		}
@@ -164,13 +164,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = multTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = multTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = multTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = multTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 		}
@@ -182,13 +182,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = divTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = divTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = divTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = divTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 		}
@@ -200,13 +200,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = jmpTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = jmpTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = jmpTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = jmpTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 		}
@@ -218,13 +218,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = jmpnTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = jmpnTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = jmpnTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = jmpnTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 		}
@@ -236,13 +236,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = jmppTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = jmppTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = jmppTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = jmppTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 		}
@@ -254,13 +254,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = jmpzTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = jmpzTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = jmpzTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = jmpzTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 		}
@@ -287,13 +287,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = addTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = addTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = addTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = addTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 		}
@@ -305,13 +305,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = storeTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = storeTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = storeTraducao(traducao, linha_info->Tokens[i+1], &convertido);
+				traducao = storeTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 		}
