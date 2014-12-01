@@ -1,21 +1,37 @@
 global _start
-section .data
-
 section .bss
-io_buf resd 1
-size_sum_out resb 1
+x resd 1
+io_buf resb 12
+char resd 1
 section .text
 _start:
 
 
-    ;push var
+mov eax, 100
+push char
 
-    call _LerInteiro
-    call _EscreverInteiro
+call _LerInteiro
 
-	mov eax, 1
-	mov ebx, 0
-	int 80h
+;sub dword [char], 30h
+
+push dword [char]
+push dword [char]
+push dword [char]
+push dword [char]
+
+call _EscreverInteiro
+call _EscreverInteiro
+call _EscreverInteiro
+call _EscreverInteiro
+
+mov eax, 1
+mov ebx, 0
+int 80h
+
+
+
+
+
 
 _LerInteiro: 
 	enter 0,0 
@@ -45,7 +61,8 @@ _LIend:
 	pop eax
 	leave 
 	ret 4
-
+	
+	
 _EscreverInteiro:
 	enter 0,0
 	push eax
