@@ -14,13 +14,13 @@ int main(int argc, char const *argv[])
 	char *nomeEntrada;
 	char *nomeSaidaPre, *nomeSaidaMacro, *nomeSaida, *nomeSaidaBin, *nomeSaidaDebug;
 
-	nomeEntrada = (char*)malloc((strlen(argv[2])+6)*sizeof(char));
-	nomeSaida = (char*)malloc((strlen(argv[2])+6)*sizeof(char));
-	nomeSaidaBin = (char*)malloc((strlen(argv[2])+6)*sizeof(char));
-	nomeSaidaDebug = (char*)malloc((strlen(argv[2])+6)*sizeof(char));
+	nomeEntrada = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
+	nomeSaida = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
+	nomeSaidaBin = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
+	nomeSaidaDebug = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
 
-	nomeSaidaPre = (char*)malloc((strlen(argv[2])+6)*sizeof(char));
-	nomeSaidaMacro = (char*)malloc((strlen(argv[2])+6)*sizeof(char));
+	nomeSaidaPre = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
+	nomeSaidaMacro = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
 
 
 	// char nomeEntrada[] = "inventado.asm";
@@ -28,10 +28,13 @@ int main(int argc, char const *argv[])
 	// char nomeSaidaMacro[] = "inventadoMACRO.mcr";
 	// char nomeSaida[] = "saidaIA32.asm";
 
-	strcpy(nomeEntrada, argv[2]);
-	strcpy(nomeSaida, argv[2]);
-	strcpy(nomeSaidaPre, argv[2]);
-	strcpy(nomeSaidaMacro, argv[2]);
+	strcpy(nomeEntrada, argv[1]);
+	strcpy(nomeSaida, argv[1]);
+	strcpy(nomeSaidaBin, argv[1]);
+	strcpy(nomeSaidaDebug, argv[1]);
+
+	strcpy(nomeSaidaPre, argv[1]);
+	strcpy(nomeSaidaMacro, argv[1]);
 
 	strcat(nomeEntrada, ".asm");
 	strcat(nomeSaida, ".s");
@@ -46,6 +49,8 @@ int main(int argc, char const *argv[])
 	
 	//gerando .mcr 
 	resolveMacro(nomeSaidaPre, nomeSaidaMacro);
+	printf("%s\n", nomeSaidaBin);
+	printf("%s\n", nomeSaidaDebug);
 
 	resolvePassagemUnica(nomeSaidaMacro, nomeSaida, nomeSaidaBin, nomeSaidaDebug);
 

@@ -10,9 +10,9 @@
 extern struct infoLinha *linha_info;
 extern struct TS *TabelaSimbolos;
 
-void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos);
+void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaidaDebug, TS *TabelaSimbolos);
 void resolveIndefinicoes(char *nomeArquivoSaida, TS *TabelaSimbolos);
-void declaravariaveis(char *nomeArquivoSaida, TS *TabelaSimbolos);
+void declaravariaveis(char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaidaDebug, TS *TabelaSimbolos);
 
 struct Assembly
 {

@@ -55,7 +55,7 @@ struct ts
 typedef struct ts TS;
 
 
-void resolvePassagemUnica(char *nomeEntrada, char *nomeSaida);
+void resolvePassagemUnica(char *nomeEntrada, char *nomeSaida, char *nomeSaidaBin, char *nomeSaidaDebug);
 
 
 
