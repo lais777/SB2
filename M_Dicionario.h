@@ -43,7 +43,7 @@ Traducao * jmpTraducao(Traducao * linha, char * x, int op,FILE *arq);
 Traducao * jmpzTraducao(Traducao * linha, char * x, int op,FILE *arq);
 Traducao * stopTraducao(Traducao * linha,FILE *arq);
 Traducao * sectiondataTraducao(Traducao * linha);
-Traducao * spaceTraducao(Traducao * linha, char * x, int op, char * y, int  opY,FILE *arq );
+Traducao * spaceTraducao(Traducao * linha, char * x, int op, char * y, int  opY );
 Traducao * sectiontextTraducao(Traducao * linha);
 Traducao * sectiontextTraducao(Traducao * linha);
 Traducao * constTraducao(Traducao * linha, char * x, char * y );

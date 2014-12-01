@@ -27,20 +27,14 @@ int * converteBinario(char * string)
 		if(string[i] != ' ')
 		{
 			numAtual[k] = string[i];
-			k++;
-			
+			k++;			
 		}	
         
 		if(k == 2)
 		{
 			int num;
-
-			printf("\n num = %s", numAtual);
 			num = atoi(numAtual);
-
-			printf("num = %d", num);
 			k = 0;
-
 			numGrupos++;
 		}
 	}
@@ -56,28 +50,19 @@ int * converteBinario(char * string)
 		{
 			numAtual[k] = string[i];
 			k++;
-			
 		}	
         
 		if(k == 2)
 		{
 			int num;
-
-			printf("\n num = %s", numAtual);
 			num = atoi(numAtual);
-
-			printf("num = %d", num);
 			k = 0;
 			Grupos[numGrupos] = num;
 			numGrupos++;
 		}
 	}
 
-
-
 	printf("numGrupos = %d\n",numGrupos );
-	
-
 	for(i = 0;i < numGrupos;i++)
 	{
 		printf("\nGrupo[%d] = %d", i, Grupos[i]);
