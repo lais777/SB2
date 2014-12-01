@@ -32,14 +32,14 @@ struct traducao
 
 typedef struct traducao Traducao;
 
-// struct linhaInstrucao
-// {
-//     char * traducao;
-//     struct linhaInstrucao *prox;
-//     struct linhaInstrucao *ant;
-// };
+struct linhaInstrucao
+{
+    char * traducao;
+    struct linhaInstrucao *prox;
+    struct linhaInstrucao *ant;
+};
 
-// typedef struct linhaInstrucao linha_Instrucao;
+typedef struct linhaInstrucao linha_Instrucao;
 
 
 

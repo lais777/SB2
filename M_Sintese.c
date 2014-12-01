@@ -79,6 +79,26 @@ assembly* carregaMenmonicos(assembly *listaAssembly)
 	return listaAssembly;
 }
 
+void gravandoNoArquivo(linha_Instrucao *trad, FILE *saida)
+{
+	linha_Instrucao *p, *final;
+
+	for (p = trad; p!=NULL; p=p->prox)
+	{
+		final = p;
+	}
+
+	for (p = final; p != trad; p = p->ant)
+	{
+		fprintf(saida, "%s\n", p->traducao);
+	}
+
+	fprintf(saida, "%s\n", p->traducao);
+
+}
+
+
+
 //funcao principal do modulo que gera o cógigo objeto, porem ainda não resolve as pendencias
 void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 {
@@ -107,16 +127,15 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valor;
 				traducao = addTraducao(traducao, linha_info->Tokens[i+1], &convertido);
-				fprintf(saida, "%s\n", traducao->traducao->traducao);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
 				traducao = addTraducao(traducao, linha_info->Tokens[i+1], &convertido);
-				fprintf(saida, "%s\n", traducao->traducao->traducao);
 			}
 
+			gravandoNoArquivo(traducao->traducao, saida);
 			
 		}
 		else if (!strcmp(linha_info->Tokens[i], "SUB"))
@@ -135,6 +154,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
 				traducao = subTraducao(traducao, linha_info->Tokens[i+1], &convertido);
 			}
+			gravandoNoArquivo(traducao->traducao, saida);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "MULT"))
 		{
@@ -152,6 +172,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
 				traducao = multTraducao(traducao, linha_info->Tokens[i+1], &convertido);
 			}
+			gravandoNoArquivo(traducao->traducao, saida);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "DIV"))
 		{
@@ -169,6 +190,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
 				traducao = divTraducao(traducao, linha_info->Tokens[i+1], &convertido);
 			}
+			gravandoNoArquivo(traducao->traducao, saida);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "JMP"))
 		{
@@ -186,6 +208,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
 				traducao = jmpTraducao(traducao, linha_info->Tokens[i+1], &convertido);
 			}
+			gravandoNoArquivo(traducao->traducao, saida);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "JMPN"))
 		{
@@ -203,6 +226,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
 				traducao = jmpnTraducao(traducao, linha_info->Tokens[i+1], &convertido);
 			}
+			gravandoNoArquivo(traducao->traducao, saida);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "JMPP"))
 		{
@@ -220,6 +244,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
 				traducao = jmppTraducao(traducao, linha_info->Tokens[i+1], &convertido);
 			}
+			gravandoNoArquivo(traducao->traducao, saida);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "JMPZ"))
 		{
@@ -237,6 +262,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
 				traducao = jmpzTraducao(traducao, linha_info->Tokens[i+1], &convertido);
 			}
+			gravandoNoArquivo(traducao->traducao, saida);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "COPY"))
 		{
@@ -251,6 +277,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			{
 				traducao = copyTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, linha_info->Tokens[i+2], resultadoBuscaSimbolo2->valorDeDefinicao);
 			}
+			gravandoNoArquivo(traducao->traducao, saida);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "LOAD"))
 		{
@@ -268,6 +295,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
 				traducao = addTraducao(traducao, linha_info->Tokens[i+1], &convertido);
 			}
+			gravandoNoArquivo(traducao->traducao, saida);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "STORE"))
 		{
@@ -285,6 +313,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
 				traducao = storeTraducao(traducao, linha_info->Tokens[i+1], &convertido);
 			}
+			gravandoNoArquivo(traducao->traducao, saida);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "INPUT"))
 		{
@@ -366,16 +395,9 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 		}
 		else if (!strcmp(linha_info->Tokens[i], "STOP"))
 		{
-			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
-
-			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
-			{
-				traducao = stopTraducao(traducao);
-			}
-			else
-			{
-				traducao = stopTraducao(traducao);
-			}
+			traducao = stopTraducao(traducao);
+			
+			gravandoNoArquivo(traducao->traducao, saida);
 		}
 	}
 
