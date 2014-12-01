@@ -10,7 +10,7 @@
 
 
 
-void resolvePassagemUnica(char *nomeEntrada, char *nomeSaida)
+void resolvePassagemUnica(char *nomeEntrada, char *nomeSaida, char *nomeSaidaBin, char *nomeSaidaDebug)
 {
 
 	
@@ -56,7 +56,7 @@ void resolvePassagemUnica(char *nomeEntrada, char *nomeSaida)
 	 
 	fclose(ptr_file);
 
-	declaravariaveis(nomeSaida, tabelaSims);
+	declaravariaveis(nomeSaida, nomeSaidaBin, nomeSaidaDebug, tabelaSims);
 
 	ptr_file =fopen(nomeEntrada,"r");
 
@@ -74,7 +74,7 @@ void resolvePassagemUnica(char *nomeEntrada, char *nomeSaida)
 		 j++;
 	 	posicao+= contaSomaPos( linha); 
 
-	 	Sintese (linha, nomeSaida, tabelaSims);
+	 	Sintese (linha, nomeSaida, nomeSaidaBin, nomeSaidaDebug, tabelaSims);
 
 	 }
 
