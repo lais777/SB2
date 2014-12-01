@@ -131,15 +131,12 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 	char convertido;
 	char *argumentos;
 	int valor;
-	Traducao *traducao;
 
 	traducao = (Traducao *)malloc(1*sizeof(Traducao));
 
 	saida = fopen(nomeArquivoSaida, "a");
 	saidaBin = fopen(nomeSaidaBin, "ab");
 	saidaDebug = fopen(nomeSaidaDebug, "a");
-
-	argumentos = (char *)malloc(100*sizeof(char));
 	
     int i;
 	for ( i = 0; i < linha_info->numTokens; ++i)
@@ -148,18 +145,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 		{
 			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
 
-			strcpy(argumentos ,linha_info->Tokens[i+1]);
-
-			if (!strcmp(linha_info->Tokens[i], "+"))
-			{
-				printf("eu vejo o +\n");
-			}
-
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				// convertido = (char)resultadoBuscaSimbolo->valor;
 				strcat(argumentos, "\0");
+				printf("VARIAVEL = %s\n", linha_info->Tokens[i+1]);
+				printf("OPCODE = %d\n", resultadoBuscaSimbolo->valor);
 				traducao = addTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
@@ -364,27 +356,30 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 		{
 			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
 
-			// if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
-			// {
-			// 	traducao = Traducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valor);
-			// }
-			// else
-			// {
-			// 	traducao = addTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
-			// }
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				traducao = inputTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+			}
+			else
+			{
+				traducao = inputTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+			}
+
+			gravandoNoArquivo(traducao->traducao, saida);
+			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "OUTPUT"))
 		{
 			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
 
-			// if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
-			// {
-			// 	traducao = Traducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valor);
-			// }
-			// else
-			// {
-			// 	traducao = outputTraducao(traducao, linha->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
-			// }
+			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			{
+				traducao = outputTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+			}
+			else
+			{
+				traducao = outputTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+			}
 		}
 		else if (!strcmp(linha_info->Tokens[i], "C_INPUT"))
 		{
@@ -450,7 +445,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 	fclose(saida);	
 }
 
-void imprimeFuncaoEscreverInteiro(FILE *saida, FILE *saidaBin, FILE *saidaDebug)
+void imprimeFuncaoEscreverInteiro(FILE *saida, FILE *saidaDebug)
 {
 	fprintf(saida, "enter 0,0 \n");
 	fprintf(saida, "push eax \n");
@@ -495,9 +490,50 @@ void imprimeFuncaoEscreverInteiro(FILE *saida, FILE *saidaBin, FILE *saidaDebug)
 	fprintf(saida, "leave \n");
 	fprintf(saida, "ret 4 \n");
 
+
+	////escrevendo no arquivo de opcodes
+	fprintf(saida, "c8 00 00 00 \n");
+	fprintf(saida, "50\n");
+	fprintf(saida, "be 88 91 04 08\n");
+	fprintf(saida, "8b 5d 08\n");
+	fprintf(saida, "b9 0a 00 00 00\n");
+	fprintf(saida, "c7 06 00 00 00 00\n");
+	fprintf(saida, "c7 06 00 00 00 00 \n");
+	fprintf(saida, "c7 06 00 00 00 00\n");
+	fprintf(saida, "ba 00 00 00 00\n");
+	fprintf(saida, "89 d8\n");
+	fprintf(saida, "f7 f9\n");
+	fprintf(saida, "83 c2 30\n");
+	fprintf(saida, "88 16\n");
+	fprintf(saida, "89 c3 \n");
+	fprintf(saida, "46\n");
+	fprintf(saida, "83 fb 00\n");
+	fprintf(saida, "75 ea\n");
+	fprintf(saida, "b8 88 91 04 08\n");
+	fprintf(saida, "89 f2\n");
+	fprintf(saida, "4e\n");
+	fprintf(saida, "8a 18\n");
+	fprintf(saida, "8a 0e\n");
+	fprintf(saida, "88 08\n");
+	fprintf(saida, "88 1e\n");
+	fprintf(saida, "40\n");
+	fprintf(saida, "4e\n");
+	fprintf(saida, "39 f0\n");
+	fprintf(saida, "7c f2\n");
+	fprintf(saida, "c6 02 0a\n");
+	fprintf(saida, "42 \n");
+	fprintf(saida, "c6 02 00 \n");
+	fprintf(saida, "b8 04 00 00 00\n");
+	fprintf(saida, "bb 01 00 00 00 \n");
+	fprintf(saida, "b9 88 91 04 08\n");
+	fprintf(saida, "ba 0c 00 00 00\n");
+	fprintf(saida, "cd 80\n");
+	fprintf(saida, "58\n");
+	fprintf(saida, "c9 \n");
+	fprintf(saida, "c2 04 00\n");
 }
 
-void imprimeFuncaoLerInteiro(FILE *saida, FILE *saidaBin, FILE *saidaDebug)
+void imprimeFuncaoLerInteiro(FILE *saida, FILE *saidaDebug)
 {
 	fprintf(saida, "enter 0,0 \n");
 	fprintf(saida, "push eax \n");
@@ -528,13 +564,39 @@ void imprimeFuncaoLerInteiro(FILE *saida, FILE *saidaBin, FILE *saidaDebug)
 	fprintf(saida, "ret 4 \n");
 
 
+	////gravando os opcodes
+	fprintf(saida, "c8 00 00 00 ");
+	fprintf(saida, "50 ");
+	fprintf(saida, "b8 03 00 00 00 ");
+	fprintf(saida, "bb 00 00 00 00 ");
+	fprintf(saida, "b9 88 91 04 08n ");
+	fprintf(saida, "ba 0c 00 00 00 ");
+	fprintf(saida, "cd 80 ");
+	fprintf(saida, "bb 00 00 00 00 ");
+	fprintf(saida, "b9 00 00 00 00 ");
+	fprintf(saida, "8a 18 ");
+	fprintf(saida, "80 fb 0a ");
+	fprintf(saida, "74 10 ");
+	fprintf(saida, "80 fb 00 ");
+	fprintf(saida, "74 0b ");
+	fprintf(saida, "80 eb 30 ");
+	fprintf(saida, "6b c9 0a ");
+	fprintf(saida, "01 d9 ");
+	fprintf(saida, "40 ");
+	fprintf(saida, "eb e9 ");
+	fprintf(saida, "8b 55 08 ");
+	fprintf(saida, "89 0a ");
+	fprintf(saida, "58 ");
+	fprintf(saida, "c9 ");
+	fprintf(saida, "c2 04 00 ");
 }
 
 void declaravariaveis(char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaidaDebug, TS *TabelaSimbolos)
 {
 	TS* p;
 	FILE *saida, *saidaBin, *saidaDebug;
-	char percent = "%";
+	char percent = '%';
+	int op = 0;
 
 	saida = fopen(nomeArquivoSaida, "w");
 	saidaBin = fopen(nomeSaidaBin, "wb");
@@ -545,7 +607,6 @@ void declaravariaveis(char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaid
  		printf("tipoDeDefinicao = %s\n", p->tipoDeDefinicao);
  		if (!strcmp(p->tipoDeDefinicao, "CONST"))
  		{
- 			printf("entrei no if\n");
  			fprintf(saida, "%c", percent);
 
  			fprintf(saida, "define %s %d\n", p->nome, p->valorDeDefinicao);
@@ -559,16 +620,33 @@ void declaravariaveis(char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaid
  	{
  		if (!strcmp(p->tipoDeDefinicao, "SPACE"))
  		{
+ 			p->valor = op;
+ 			op ++;
  			fprintf(saida, "%s resw %d\n", p->nome, p->valorDeDefinicao);
  		}		
  	}
 
  	fprintf(saida, "section .text\nglobal _start\n_start:\n");
- 	imprimeFuncaoLerInteiro(saida, saidaBin, saidaDebug);
- 	imprimeFuncaoEscreverInteiro(saida, saidaBin, saidaDebug);
 
  	fclose(saida);
  	fclose(saidaBin);
+ 	fclose(saidaDebug);
+
+}
+
+void colocandoFuncoes(char *nomeArquivoSaida, char *nomeSaidaDebug)
+{
+	FILE *saida, *saidaDebug;
+
+	saida = fopen(nomeArquivoSaida, "a");
+	saidaDebug = fopen(nomeSaidaDebug, "a");
+
+	fprintf(saida, "_LerInteiro:\n");
+ 	imprimeFuncaoLerInteiro(saida, saidaDebug);
+ 	fprintf(saida, "_EscreveInteiro:\n");
+ 	imprimeFuncaoEscreverInteiro(saida, saidaDebug);
+
+ 	fclose(saida);
  	fclose(saidaDebug);
 
 }

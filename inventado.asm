@@ -6,5 +6,5 @@ z: space
 
 section text
 add variavel
-mult variavel
+mult var
 stop

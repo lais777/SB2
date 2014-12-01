@@ -55,9 +55,9 @@ void resolvePassagemUnica(char *nomeEntrada, char *nomeSaida, char *nomeSaidaBin
 	 }
 	 
 	fclose(ptr_file);
-	printf("passei de antes\n");
+	
 	declaravariaveis(nomeSaida, nomeSaidaBin, nomeSaidaDebug, tabelaSims);
-	printf("passei\n");
+	
 	ptr_file =fopen(nomeEntrada,"r");
 
 	//laco principal que le o arquivo de codigo
@@ -77,6 +77,8 @@ void resolvePassagemUnica(char *nomeEntrada, char *nomeSaida, char *nomeSaidaBin
 	 	Sintese (linha, nomeSaida, nomeSaidaBin, nomeSaidaDebug, tabelaSims);
 
 	 }
+
+	colocandoFuncoes(nomeSaida, nomeSaidaDebug);
 
 	fclose(ptr_file);
 }

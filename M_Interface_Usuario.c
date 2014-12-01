@@ -49,9 +49,6 @@ int main(int argc, char const *argv[])
 	
 	//gerando .mcr 
 	resolveMacro(nomeSaidaPre, nomeSaidaMacro);
-	printf("%s\n", nomeSaidaBin);
-	printf("%s\n", nomeSaidaDebug);
-	printf("%s\n", nomeEntrada);
 
 	resolvePassagemUnica(nomeSaidaMacro, nomeSaida, nomeSaidaBin, nomeSaidaDebug);
 

@@ -13,6 +13,7 @@ extern struct TS *TabelaSimbolos;
 void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaidaDebug, TS *TabelaSimbolos);
 void resolveIndefinicoes(char *nomeArquivoSaida, TS *TabelaSimbolos);
 void declaravariaveis(char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaidaDebug, TS *TabelaSimbolos);
+void colocandoFuncoes(char *nomeArquivoSaida, char *nomeSaidaDebug);
 
 struct Assembly
 {
