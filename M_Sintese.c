@@ -83,6 +83,8 @@ void gravandoNoArquivo(linha_Instrucao *trad, FILE *saida)
 {
 	linha_Instrucao *p, *final;
 
+	final = trad;
+
 	for (p = trad; p!=NULL; p=p->prox)
 	{
 		final = p;
@@ -91,6 +93,7 @@ void gravandoNoArquivo(linha_Instrucao *trad, FILE *saida)
 	for (p = final; p != trad; p = p->ant)
 	{
 		fprintf(saida, "%s\n", p->traducao);
+		printf("Saida = %s\n", p->traducao);
 	}
 
 	fprintf(saida, "%s\n", p->traducao);
@@ -163,13 +166,13 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, TS *TabelaSimbolos)
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valor;
+				// convertido = (char)resultadoBuscaSimbolo->valor;
 				traducao = multTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor);
 			}
 			else
 			{
 				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
+				// convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
 				traducao = multTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
