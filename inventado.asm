@@ -5,6 +5,6 @@ x: space 2
 z: space
 
 section text
-add variavel
+add variavel + b
 mult variavel
 stop

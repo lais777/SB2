@@ -129,6 +129,7 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 	FILE *saida, *saidaBin, *saidaDebug;
 	char *EhValido, *EhData;
 	char convertido;
+	char *argumentos;
 	int valor;
 	Traducao *traducao;
 
@@ -137,6 +138,8 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 	saida = fopen(nomeArquivoSaida, "a");
 	saidaBin = fopen(nomeSaidaBin, "ab");
 	saidaDebug = fopen(nomeSaidaDebug, "a");
+
+	argumentos = (char *)malloc(100*sizeof(char));
 	
     int i;
 	for ( i = 0; i < linha_info->numTokens; ++i)
@@ -145,10 +148,18 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 		{
 			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
 
+			strcpy(argumentos ,linha_info->Tokens[i+1]);
+
+			if (!strcmp(linha_info->Tokens[i], "+"))
+			{
+				printf("eu vejo o +\n");
+			}
+
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
 				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
 				// convertido = (char)resultadoBuscaSimbolo->valor;
+				strcat(argumentos, "\0");
 				traducao = addTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
@@ -523,7 +534,7 @@ void declaravariaveis(char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaid
 {
 	TS* p;
 	FILE *saida, *saidaBin, *saidaDebug;
-	char percent = "%";
+	// char percent = "%";
 
 	saida = fopen(nomeArquivoSaida, "w");
 	saidaBin = fopen(nomeSaidaBin, "wb");
@@ -533,11 +544,11 @@ void declaravariaveis(char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaid
  	{
  		if (!strcmp(p->tipoDeDefinicao, "CONST"))
  		{
- 			fprintf(saida, "%c", percent);
+ 			// fprintf(saida, "%c", percent);
  			fprintf(saida, "define %s %d\n", p->nome, p->valorDeDefinicao);
  		}		
  	}
-
+ 	printf("entrei funcao\n");
  	fprintf(saida, "section .bss\n");
 
  	for (p = TabelaSimbolos; p!= NULL; p = p->prox)

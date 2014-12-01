@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
 	char *nomeEntrada;
 	char *nomeSaidaPre, *nomeSaidaMacro, *nomeSaida, *nomeSaidaBin, *nomeSaidaDebug;
 
-	nomeEntrada = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
+	// nomeEntrada = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
 	nomeSaida = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
 	nomeSaidaBin = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
 	nomeSaidaDebug = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
@@ -28,15 +28,15 @@ int main(int argc, char const *argv[])
 	// char nomeSaidaMacro[] = "inventadoMACRO.mcr";
 	// char nomeSaida[] = "saidaIA32.asm";
 
-	strcpy(nomeEntrada, argv[1]);
-	strcpy(nomeSaida, argv[1]);
-	strcpy(nomeSaidaBin, argv[1]);
-	strcpy(nomeSaidaDebug, argv[1]);
+	// strcpy(nomeEntrada, argv[1]);
+	strcpy(nomeSaida, argv[2]);
+	strcpy(nomeSaidaBin, argv[2]);
+	strcpy(nomeSaidaDebug, argv[2]);
 
-	strcpy(nomeSaidaPre, argv[1]);
-	strcpy(nomeSaidaMacro, argv[1]);
+	strcpy(nomeSaidaPre, argv[2]);
+	strcpy(nomeSaidaMacro, argv[2]);
 
-	strcat(nomeEntrada, ".asm");
+	// strcat(nomeEntrada, ".asm");
 	strcat(nomeSaida, ".s");
 	strcat(nomeSaidaBin, ".bin");
 	strcat(nomeSaidaDebug, ".txt");
@@ -45,12 +45,13 @@ int main(int argc, char const *argv[])
 	strcat(nomeSaidaMacro, ".mcr");
 	
 	//gerando o arquivo .pre
-	resolvePreProcessamento(nomeEntrada, nomeSaidaPre);
+	resolvePreProcessamento(argv[1], nomeSaidaPre);
 	
 	//gerando .mcr 
 	resolveMacro(nomeSaidaPre, nomeSaidaMacro);
 	printf("%s\n", nomeSaidaBin);
 	printf("%s\n", nomeSaidaDebug);
+	printf("%s\n", argv[1]);
 
 	resolvePassagemUnica(nomeSaidaMacro, nomeSaida, nomeSaidaBin, nomeSaidaDebug);
 
