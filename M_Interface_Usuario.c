@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
 	nomeSaidaMacro = (char*)malloc((strlen(argv[1])+6)*sizeof(char));
 
 
-	// char nomeEntrada[] = "inventado.asm";
+	char nomeEntrada[] = "inventado.asm";
 	// char nomeSaidaPre[] = "inventadoPRE.pre";
 	// char nomeSaidaMacro[] = "inventadoMACRO.mcr";
 	// char nomeSaida[] = "saidaIA32.asm";
@@ -45,7 +45,7 @@ int main(int argc, char const *argv[])
 	strcat(nomeSaidaMacro, ".mcr");
 	
 	//gerando o arquivo .pre
-	resolvePreProcessamento(argv[1], nomeSaidaPre);
+	resolvePreProcessamento(nomeEntrada, nomeSaidaPre);
 	
 	//gerando .mcr 
 	resolveMacro(nomeSaidaPre, nomeSaidaMacro);
