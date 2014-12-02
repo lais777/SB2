@@ -39,7 +39,7 @@ int main(int argc, char const *argv[])
 	// strcat(nomeEntrada, ".asm");
 	strcat(nomeSaida, ".s");
 	strcat(nomeSaidaBin, ".bin");
-	strcat(nomeSaidaDebug, ".txt");
+	strcat(nomeSaidaDebug, "_debug.txt");
 
 	strcat(nomeSaidaPre, ".pre");
 	strcat(nomeSaidaMacro, ".mcr");

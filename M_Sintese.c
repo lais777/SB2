@@ -131,8 +131,12 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 	char convertido;
 	char *argumentos;
 	int valor;
+	char *variavel;
+	char *variavel2;
 
 	traducao = (Traducao *)malloc(1*sizeof(Traducao));
+	variavel = (char *)malloc(100*sizeof(char));
+	variavel2 = (char *)malloc(100*sizeof(char));
 
 	saida = fopen(nomeArquivoSaida, "a");
 	saidaBin = fopen(nomeSaidaBin, "ab");
@@ -152,13 +156,16 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 				strcat(argumentos, "\0");
 				printf("VARIAVEL = %s\n", linha_info->Tokens[i+1]);
 				printf("OPCODE = %d\n", resultadoBuscaSimbolo->valor);
-				traducao = addTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+
+				traducao = addTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
 			{
-				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
-				// convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = addTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+				traducao = addTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao , saidaBin);
 			}
 
 			gravandoNoArquivo(traducao->traducao, saida);
@@ -171,15 +178,14 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
-				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = subTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+				traducao = subTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
 			{
-				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = subTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+				traducao = subTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
@@ -190,15 +196,14 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
-				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
-				// convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = multTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+				traducao = multTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
 			{
-				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
-				// convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = multTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+				traducao = multTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
@@ -209,15 +214,14 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
-				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = divTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+				traducao = divTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
 			{
-				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = divTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+				traducao = divTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
@@ -228,15 +232,14 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
-				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = jmpTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor,saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+				traducao = jmpTraducao(traducao, variavel, resultadoBuscaSimbolo->valor,saidaBin);
 			}
 			else
 			{
-				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = jmpTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao,saidaBin);
+				traducao = jmpTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao,saidaBin);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
@@ -247,15 +250,14 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
-				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = jmpnTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+				traducao = jmpnTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
 			{
-				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = jmpnTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+				traducao = jmpnTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
@@ -266,15 +268,14 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
-				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = jmppTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+				traducao = jmppTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
 			{
-				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = jmppTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+				traducao = jmppTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
@@ -285,15 +286,14 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
-				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = jmpzTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+				traducao = jmpzTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
 			{
-				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = jmpzTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+				traducao = jmpzTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
@@ -303,14 +303,43 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 			resultadoBuscaSimbolo = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+1]);
 			resultadoBuscaSimbolo2 = buscaSimbolo(TabelaSimbolos, linha_info->Tokens[i+2]);
 
-			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
+			if ((!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE")) && (!strcmp(resultadoBuscaSimbolo2->tipoDeDefinicao, "SPACE")) )
 			{
-				traducao = copyTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, linha_info->Tokens[i+2], resultadoBuscaSimbolo2->valor, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+
+				stcpy(variavel2, "[");
+				strcat(variavel2, linha_info->Tokens[i+1]);
+				strcat(variavel2, "]\0");
+
+				traducao = copyTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, variavel2, resultadoBuscaSimbolo2->valor, saidaBin);
+				
 			}
-			else
+			else if ( (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE")) && (!strcmp(resultadoBuscaSimbolo2->tipoDeDefinicao, "CONST")) )
 			{
-				traducao = copyTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, linha_info->Tokens[i+2], resultadoBuscaSimbolo2->valorDeDefinicao, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+
+
+				traducao = copyTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, resultadoBuscaSimbolo2->valorDeDefinicao, resultadoBuscaSimbolo2->valorDeDefinicao, saidaBin);
 			}
+			else if ( (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "CONST")) && (!strcmp(resultadoBuscaSimbolo2->tipoDeDefinicao, "SPACE")) )
+			{
+				stcpy(variavel2, "[");
+				strcat(variavel2, linha_info->Tokens[i+1]);
+				strcat(variavel2, "]\0");
+
+				traducao = copyTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, variavel2, resultadoBuscaSimbolo2->valorDeDefinicao, saidaBin);
+			}
+			else if ( (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "CONST")) && (!strcmp(resultadoBuscaSimbolo2->tipoDeDefinicao, "CONST")) )
+			{
+
+				traducao = copyTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo2->valorDeDefinicao, resultadoBuscaSimbolo2->valorDeDefinicao, saidaBin);
+
+			}
+
 			gravandoNoArquivo(traducao->traducao, saida);
 			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
 		}
@@ -320,15 +349,14 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
-				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = addTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+				traducao = addTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
 			{
-				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = addTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+				traducao = addTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
@@ -339,15 +367,14 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
-				// itoa(resultadoBuscaSimbolo->valor, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valor;
-				traducao = storeTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+				traducao = storeTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
 			{
-				// itoa(resultadoBuscaSimbolo->valorDeDefinicao, convertido, 10);
-				convertido = (char)resultadoBuscaSimbolo->valorDeDefinicao;
-				traducao = storeTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+				traducao = storeTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
 			}
 			gravandoNoArquivo(traducao->traducao, saida);
 			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
@@ -358,11 +385,14 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
-				traducao = inputTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+				traducao = inputTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
 			{
-				traducao = inputTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+				traducao = inputTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
 			}
 
 			gravandoNoArquivo(traducao->traducao, saida);
@@ -374,12 +404,18 @@ void Sintese (infoLinha *linha_info, char *nomeArquivoSaida, char *nomeSaidaBin,
 
 			if (!strcmp(resultadoBuscaSimbolo->tipoDeDefinicao, "SPACE"))
 			{
-				traducao = outputTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valor, saidaBin);
+				stcpy(variavel, "[");
+				strcat(variavel, linha_info->Tokens[i+1]);
+				strcat(variavel, "]\0");
+				traducao = outputTraducao(traducao, variavel, resultadoBuscaSimbolo->valor, saidaBin);
 			}
 			else
 			{
-				traducao = outputTraducao(traducao, linha_info->Tokens[i+1], resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
+				traducao = outputTraducao(traducao, resultadoBuscaSimbolo->valorDeDefinicao, resultadoBuscaSimbolo->valorDeDefinicao, saidaBin);
 			}
+
+			gravandoNoArquivo(traducao->traducao, saida);
+			gravandoNoArquivoOpcodes(traducao->opcode, saidaDebug);
 		}
 		else if (!strcmp(linha_info->Tokens[i], "C_INPUT"))
 		{
@@ -492,45 +528,45 @@ void imprimeFuncaoEscreverInteiro(FILE *saida, FILE *saidaDebug)
 
 
 	////escrevendo no arquivo de opcodes
-	fprintf(saida, "c8 00 00 00 \n");
-	fprintf(saida, "50\n");
-	fprintf(saida, "be 88 91 04 08\n");
-	fprintf(saida, "8b 5d 08\n");
-	fprintf(saida, "b9 0a 00 00 00\n");
-	fprintf(saida, "c7 06 00 00 00 00\n");
-	fprintf(saida, "c7 06 00 00 00 00 \n");
-	fprintf(saida, "c7 06 00 00 00 00\n");
-	fprintf(saida, "ba 00 00 00 00\n");
-	fprintf(saida, "89 d8\n");
-	fprintf(saida, "f7 f9\n");
-	fprintf(saida, "83 c2 30\n");
-	fprintf(saida, "88 16\n");
-	fprintf(saida, "89 c3 \n");
-	fprintf(saida, "46\n");
-	fprintf(saida, "83 fb 00\n");
-	fprintf(saida, "75 ea\n");
-	fprintf(saida, "b8 88 91 04 08\n");
-	fprintf(saida, "89 f2\n");
-	fprintf(saida, "4e\n");
-	fprintf(saida, "8a 18\n");
-	fprintf(saida, "8a 0e\n");
-	fprintf(saida, "88 08\n");
-	fprintf(saida, "88 1e\n");
-	fprintf(saida, "40\n");
-	fprintf(saida, "4e\n");
-	fprintf(saida, "39 f0\n");
-	fprintf(saida, "7c f2\n");
-	fprintf(saida, "c6 02 0a\n");
-	fprintf(saida, "42 \n");
-	fprintf(saida, "c6 02 00 \n");
-	fprintf(saida, "b8 04 00 00 00\n");
-	fprintf(saida, "bb 01 00 00 00 \n");
-	fprintf(saida, "b9 88 91 04 08\n");
-	fprintf(saida, "ba 0c 00 00 00\n");
-	fprintf(saida, "cd 80\n");
-	fprintf(saida, "58\n");
-	fprintf(saida, "c9 \n");
-	fprintf(saida, "c2 04 00\n");
+	fprintf(saidaDebug, "c8 00 00 00 ");
+	fprintf(saidaDebug, "50 ");
+	fprintf(saidaDebug, "be 88 91 04 08 ");
+	fprintf(saidaDebug, "8b 5d 08 ");
+	fprintf(saidaDebug, "b9 0a 00 00 00 ");
+	fprintf(saidaDebug, "c7 06 00 00 00 00 ");
+	fprintf(saidaDebug, "c7 06 00 00 00 00 ");
+	fprintf(saidaDebug, "c7 06 00 00 00 00 ");
+	fprintf(saidaDebug, "ba 00 00 00 00 ");
+	fprintf(saidaDebug, "89 d8 ");
+	fprintf(saidaDebug, "f7 f9 ");
+	fprintf(saidaDebug, "83 c2 30 ");
+	fprintf(saidaDebug, "88 16 ");
+	fprintf(saidaDebug, "89 c3  ");
+	fprintf(saidaDebug, "46 ");
+	fprintf(saidaDebug, "83 fb 00 ");
+	fprintf(saidaDebug, "75 ea ");
+	fprintf(saidaDebug, "b8 88 91 04 08 ");
+	fprintf(saidaDebug, "89 f2 ");
+	fprintf(saidaDebug, "4e ");
+	fprintf(saidaDebug, "8a 18 ");
+	fprintf(saidaDebug, "8a 0e ");
+	fprintf(saidaDebug, "88 08 ");
+	fprintf(saidaDebug, "88 1e ");
+	fprintf(saidaDebug, "40 ");
+	fprintf(saidaDebug, "4e ");
+	fprintf(saidaDebug, "39 f0 ");
+	fprintf(saidaDebug, "7c f2 ");
+	fprintf(saidaDebug, "c6 02 0a ");
+	fprintf(saidaDebug, "42 ");
+	fprintf(saidaDebug, "c6 02 00 ");
+	fprintf(saidaDebug, "b8 04 00 00 00 ");
+	fprintf(saidaDebug, "bb 01 00 00 00 ");
+	fprintf(saidaDebug, "b9 88 91 04 08 ");
+	fprintf(saidaDebug, "ba 0c 00 00 00 ");
+	fprintf(saidaDebug, "cd 80 ");
+	fprintf(saidaDebug, "58 ");
+	fprintf(saidaDebug, "c9 ");
+	fprintf(saidaDebug, "c2 04 00 ");
 }
 
 void imprimeFuncaoLerInteiro(FILE *saida, FILE *saidaDebug)
@@ -565,30 +601,30 @@ void imprimeFuncaoLerInteiro(FILE *saida, FILE *saidaDebug)
 
 
 	////gravando os opcodes
-	fprintf(saida, "c8 00 00 00 ");
-	fprintf(saida, "50 ");
-	fprintf(saida, "b8 03 00 00 00 ");
-	fprintf(saida, "bb 00 00 00 00 ");
-	fprintf(saida, "b9 88 91 04 08n ");
-	fprintf(saida, "ba 0c 00 00 00 ");
-	fprintf(saida, "cd 80 ");
-	fprintf(saida, "bb 00 00 00 00 ");
-	fprintf(saida, "b9 00 00 00 00 ");
-	fprintf(saida, "8a 18 ");
-	fprintf(saida, "80 fb 0a ");
-	fprintf(saida, "74 10 ");
-	fprintf(saida, "80 fb 00 ");
-	fprintf(saida, "74 0b ");
-	fprintf(saida, "80 eb 30 ");
-	fprintf(saida, "6b c9 0a ");
-	fprintf(saida, "01 d9 ");
-	fprintf(saida, "40 ");
-	fprintf(saida, "eb e9 ");
-	fprintf(saida, "8b 55 08 ");
-	fprintf(saida, "89 0a ");
-	fprintf(saida, "58 ");
-	fprintf(saida, "c9 ");
-	fprintf(saida, "c2 04 00 ");
+	fprintf(saidaDebug, "c8 00 00 00 ");
+	fprintf(saidaDebug, "50 ");
+	fprintf(saidaDebug, "b8 03 00 00 00 ");
+	fprintf(saidaDebug, "bb 00 00 00 00 ");
+	fprintf(saidaDebug, "b9 88 91 04 08n ");
+	fprintf(saidaDebug, "ba 0c 00 00 00 ");
+	fprintf(saidaDebug, "cd 80 ");
+	fprintf(saidaDebug, "bb 00 00 00 00 ");
+	fprintf(saidaDebug, "b9 00 00 00 00 ");
+	fprintf(saidaDebug, "8a 18 ");
+	fprintf(saidaDebug, "80 fb 0a ");
+	fprintf(saidaDebug, "74 10 ");
+	fprintf(saidaDebug, "80 fb 00 ");
+	fprintf(saidaDebug, "74 0b ");
+	fprintf(saidaDebug, "80 eb 30 ");
+	fprintf(saidaDebug, "6b c9 0a ");
+	fprintf(saidaDebug, "01 d9 ");
+	fprintf(saidaDebug, "40 ");
+	fprintf(saidaDebug, "eb e9 ");
+	fprintf(saidaDebug, "8b 55 08 ");
+	fprintf(saidaDebug, "89 0a ");
+	fprintf(saidaDebug, "58 ");
+	fprintf(saidaDebug, "c9 ");
+	fprintf(saidaDebug, "c2 04 00 ");
 }
 
 void declaravariaveis(char *nomeArquivoSaida, char *nomeSaidaBin, char *nomeSaidaDebug, TS *TabelaSimbolos)
